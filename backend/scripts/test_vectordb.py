@@ -10,7 +10,8 @@ from __future__ import annotations
 
 import argparse
 import logging
-from typing import Any
+import os
+import warnings
 
 from backend.vector_db import VectorResult, VectorQueryDebugInfo, fetch_top_vectordb
 
@@ -25,6 +26,27 @@ def _configure_logging(verbose: bool) -> None:
         level=level,
         format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
     )
+
+    # Keep CLI output readable by silencing very chatty dependency loggers.
+    # When `--verbose` is passed, we leave everything enabled for debugging.
+    if not verbose:
+        noisy_loggers = (
+            "httpx",
+            "huggingface_hub",
+            "sentence_transformers",
+            "transformers",
+            "urllib3",
+        )
+        for name in noisy_loggers:
+            logging.getLogger(name).setLevel(logging.WARNING)
+
+        # Disable progress bars and suppress the common HF unauthenticated warning
+        # (it does not affect correctness; it only impacts rate limits/download speed).
+        os.environ.setdefault("HF_HUB_DISABLE_PROGRESS_BARS", "1")
+        warnings.filterwarnings(
+            "ignore",
+            message=r"You are sending unauthenticated requests to the HF Hub\..*",
+        )
 
 
 def _print_results(results: list[VectorResult], debug: VectorQueryDebugInfo | None) -> None:
@@ -89,7 +111,7 @@ def main(argv: list[str] | None = None) -> int:
         results, debug = fetch_top_vectordb(
             n=args.top_k,
             query=args.query,
-            include_debug=True,
+            include_debug=False,
         )
     except Exception as exc:  # pragma: no cover - simple CLI error reporting
         logging.getLogger(__name__).error("Vector DB test failed: %s", exc, exc_info=True)
