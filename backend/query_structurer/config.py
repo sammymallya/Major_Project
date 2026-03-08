@@ -19,12 +19,12 @@ class QueryStructurerSettings(BaseSettings):
 
     api_key: str = Field(..., alias="GEMINI_API_KEY")
     model_name: str = Field(
-        default="gemini-1.5-flash",
-        alias="QUERY_STRUCTURER_MODEL_NAME",
+        default="gemini-2.5-flash",
+        alias="GEMINI_MODEL_NAME",
     )
 
     model_config = SettingsConfigDict(
-        env_file=(".env", "backend/.env"),
+        env_file=("backend/.env",),
         env_file_encoding="utf-8",
         populate_by_name=True,
         extra="ignore",
@@ -33,4 +33,12 @@ class QueryStructurerSettings(BaseSettings):
 
 def get_query_structurer_settings() -> QueryStructurerSettings:
     """Return a configured instance of QueryStructurerSettings."""
-    return QueryStructurerSettings()
+    settings = QueryStructurerSettings()
+    # Backwards-compatible env var name: allow GEMINI_MODEL to override
+    # (some users set GEMINI_MODEL in backend/.env). Respect it if present.
+    import os
+
+    gemini_model = os.environ.get("GEMINI_MODEL")
+    if gemini_model:
+        settings.model_name = gemini_model
+    return settings

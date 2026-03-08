@@ -7,6 +7,8 @@ in stub mode the client does not perform real connections.
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from dotenv import load_dotenv
+import os
 
 
 class KGSettings(BaseSettings):
@@ -26,7 +28,7 @@ class KGSettings(BaseSettings):
     neo4j_password: str = Field(default="", alias="KG_NEO4J_PASSWORD")
 
     model_config = SettingsConfigDict(
-        env_file=(".env", "backend/.env"),
+        env_file=("backend/.env",),
         env_file_encoding="utf-8",
         populate_by_name=True,
         extra="ignore",
@@ -35,4 +37,23 @@ class KGSettings(BaseSettings):
 
 def get_kg_settings() -> KGSettings:
     """Return a configured instance of KGSettings."""
-    return KGSettings()
+    # Ensure backend/.env is loaded (helps when imports happen before test scripts)
+    env_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+    load_dotenv(dotenv_path=env_path, override=False)
+
+    settings = KGSettings()
+
+    # Backwards-compatible env var names: allow NEO4J_URI/USERNAME/PASSWORD
+    # in addition to KG_NEO4J_* aliases.
+    uri = os.environ.get("KG_NEO4J_URI") or os.environ.get("NEO4J_URI") or os.environ.get("KG_URI")
+    user = os.environ.get("KG_NEO4J_USERNAME") or os.environ.get("NEO4J_USERNAME") or os.environ.get("NEO4J_USER")
+    pwd = os.environ.get("KG_NEO4J_PASSWORD") or os.environ.get("NEO4J_PASSWORD") or os.environ.get("KG_NEO4J_PWD")
+
+    if uri:
+        settings.neo4j_uri = uri
+    if user:
+        settings.neo4j_username = user
+    if pwd:
+        settings.neo4j_password = pwd
+
+    return settings

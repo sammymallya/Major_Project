@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import logging
 import os
+from dotenv import load_dotenv
 
 # Silence noisy loggers so output is readable
 for _name in ("httpx", "huggingface_hub", "sentence_transformers", "transformers", "urllib3"):
@@ -27,6 +28,7 @@ from backend.query_structurer import structure_query, StructuredQuery
 
 
 def _print_result(result: StructuredQuery) -> None:
+    print(result)
     print("\n=== Query Structurer Result (Gemini) ===")
     print("semantic_search_query:", result.semantic_search_query)
     print("cypher_query:", result.cypher_query)
@@ -48,6 +50,11 @@ def main(argv: list[str] | None = None) -> int:
         help="What to ask the structurer to output.",
     )
     args = parser.parse_args(argv)
+
+    # Load only backend/.env as requested (do not read project root .env)
+    env_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+    logging.info("Loading environment from %s", env_path)
+    load_dotenv(dotenv_path=env_path, override=False)
 
     if not os.environ.get("GEMINI_API_KEY"):
         logging.error("GEMINI_API_KEY is not set. Set it in backend/.env or the environment.")

@@ -35,10 +35,12 @@ class ContextUsed(BaseModel):
     Attributes:
         vector_snippet: Truncated text from the top vector result, if any.
         kg_triples_count: Number of KG triples included, if any.
+        kg_snippet: Text representation of the top KG triple, if any.
     """
 
     vector_snippet: str | None = Field(default=None, description="Top vector result text snippet")
     kg_triples_count: int | None = Field(default=None, description="Number of KG triples used")
+    kg_snippet: str | None = Field(default=None, description="Top KG triple text representation")
 
 
 class QueryResponse(BaseModel):
