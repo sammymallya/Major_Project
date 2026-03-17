@@ -15,8 +15,10 @@ from backend.dto import ContextUsed, QueryResponse
 from backend.kg import fetch_kg
 from backend.kg.types import KgTriple
 from backend.kg_reranker import rerank_kg_triples
+from backend.prompt_generator import build_prompt
 from backend.query_structurer import structure_query
 from backend.reranker import rerank_top_cross_encoder
+from backend.test_llm import generate_answer
 from backend.vector_db import fetch_top_vectordb
 
 logger = logging.getLogger(__name__)
@@ -29,31 +31,11 @@ RERANK_TOP_N = 1
 KG_RERANK_TOP_N = 1
 
 
-def _build_prompt_stub(query: str, vector_snippet: str | None, kg_triples: list) -> str:
-    """
-    Stub Prompt Generator: build a single prompt string from context and query.
-
-    If no context, prompt is just the query (e.g. for test_mode=none).
-    """
-    if not vector_snippet and not kg_triples:
-        return query
-
-    parts = []
-    if vector_snippet:
-        parts.append(f"Context:\n{vector_snippet}")
-    if kg_triples:
-        triples_text = "\n".join(f"- {t.subject} --{t.predicate}--> {t.object}" for t in kg_triples)
-        parts.append(f"Structured facts:\n{triples_text}")
-    parts.append("Instruction: Answer only using the context above. If insufficient, say so.")
-    parts.append(f"Query: {query}")
-    return "\n\n".join(parts)
-
-
 def _call_test_llm_stub(prompt: str) -> str:
     """
-    Stub Test LLM: return a placeholder answer. Replace with real LLM client later.
+    Call the Test LLM with the prompt.
     """
-    return f"[Placeholder answer for prompt length={len(prompt)}]"
+    return generate_answer(prompt)
 
 
 def run_pipeline(query: str, test_mode: TestMode) -> QueryResponse:
@@ -136,8 +118,8 @@ def run_pipeline(query: str, test_mode: TestMode) -> QueryResponse:
         top_triple = kg_triples[0]
         kg_snippet = f"{top_triple.subject} --{top_triple.predicate}--> {top_triple.object}"
 
-    prompt = _build_prompt_stub(query, vector_snippet, kg_triples)
-    answer = _call_test_llm_stub(prompt)
+    final_prompt = build_prompt(query, vector_snippet, kg_triples)
+    answer = _call_test_llm_stub(final_prompt)
 
     # Handle failure for kg mode
     if test_mode == "kg" and not kg_triples:
@@ -154,5 +136,6 @@ def run_pipeline(query: str, test_mode: TestMode) -> QueryResponse:
     return QueryResponse(
         answer=answer,
         test_mode=test_mode,
+        final_prompt=final_prompt,
         context_used=context_used,
     )
