@@ -20,6 +20,7 @@ for _name in ("httpx", "huggingface_hub", "sentence_transformers", "transformers
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(name)s | %(message)s")
 logger = logging.getLogger(__name__)
 
+from backend.prompt_generator import build_prompt
 from backend.test_llm import generate_answer
 
 
@@ -34,8 +35,11 @@ def main(argv: list[str] | None = None) -> int:
 
     logger.info("Generating answer for prompt: %s", args.prompt[:50] + "...")
 
+    # Build a proper chat prompt
+    prompt = build_prompt(args.prompt, None, None)
+
     try:
-        answer = generate_answer(args.prompt)
+        answer = generate_answer(prompt)
         print("\n=== LLM Answer ===")
         print(answer)
         return 0

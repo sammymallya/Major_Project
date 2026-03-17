@@ -10,24 +10,24 @@ from __future__ import annotations
 import logging
 from typing import Optional
 
-from transformers import T5Tokenizer, T5ForConditionalGeneration  # type: ignore[import]
+from transformers import AutoModelForCausalLM, AutoTokenizer  # type: ignore[import]
 
 from .config import TestLLMSettings, get_test_llm_settings
 
 logger = logging.getLogger(__name__)
 
 # Global model and tokenizer (lazy load)
-_model: Optional[T5ForConditionalGeneration] = None
-_tokenizer: Optional[T5Tokenizer] = None
+_model: Optional[AutoModelForCausalLM] = None
+_tokenizer: Optional[AutoTokenizer] = None
 
 
 def _load_model(settings: TestLLMSettings) -> None:
-    """Lazy load the FLAN-T5 model and tokenizer."""
+    """Lazy load the TinyLlama model and tokenizer."""
     global _model, _tokenizer
     if _model is None:
-        logger.info("Loading FLAN-T5 model '%s' on device '%s'", settings.model_name, settings.device)
-        _tokenizer = T5Tokenizer.from_pretrained(settings.model_name)
-        _model = T5ForConditionalGeneration.from_pretrained(settings.model_name)
+        logger.info("Loading TinyLlama model '%s' on device '%s'", settings.model_name, settings.device)
+        _tokenizer = AutoTokenizer.from_pretrained(settings.model_name, token=settings.hf_token)
+        _model = AutoModelForCausalLM.from_pretrained(settings.model_name, token=settings.hf_token)
         if settings.device == "cuda":
             _model.to("cuda")
         logger.info("Model loaded successfully")
@@ -35,10 +35,10 @@ def _load_model(settings: TestLLMSettings) -> None:
 
 def generate_answer(prompt: str) -> str:
     """
-    Generate an answer from the given prompt using FLAN-T5.
+    Generate an answer from the given prompt using TinyLlama.
 
     Args:
-        prompt: The input prompt string.
+        prompt: The input prompt string (assumed to be in chat format).
 
     Returns:
         Generated answer text.
@@ -54,12 +54,18 @@ def generate_answer(prompt: str) -> str:
 
     outputs = _model.generate(
         **inputs,
-        max_length=settings.max_length,
+        max_new_tokens=settings.max_new_tokens,
         temperature=settings.temperature,
-        do_sample=settings.temperature > 0,
-        num_beams=1 if settings.temperature == 0 else 4,
+        top_k=settings.top_k,
+        top_p=settings.top_p,
+        repetition_penalty=settings.repetition_penalty,
+        no_repeat_ngram_size=settings.no_repeat_ngram_size,
+        do_sample=True,
+        pad_token_id=_tokenizer.eos_token_id,
     )
 
-    answer = _tokenizer.decode(outputs[0], skip_special_tokens=True)
+    full_output = _tokenizer.decode(outputs[0], skip_special_tokens=True)
+    # Remove the input prompt from the output
+    answer = full_output[len(prompt):].strip()
     logger.debug("Generated answer length %d", len(answer))
     return answer

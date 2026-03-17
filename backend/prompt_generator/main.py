@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 def build_prompt(query: str, vector_snippet: str | None, kg_triples: list[KgTriple] | None) -> str:
-    """Build a structured prompt given query and optional context.
+    """Build a chat-style prompt for TinyLlama.
 
     Args:
         query: User question.
@@ -25,36 +25,30 @@ def build_prompt(query: str, vector_snippet: str | None, kg_triples: list[KgTrip
         kg_triples: Retrieved KG triples (or None).
 
     Returns:
-        A formatted prompt string to send to the LLM.
+        A formatted prompt string in chat format.
     """
 
-    if not vector_snippet and not kg_triples:
-        logger.debug("No context available; returning query as prompt")
-        return query
-
-    sections: list[str] = []
-
-    # Instruction section (consistent across modes)
-    instruction = (
-        "You are an assistant that answers questions, strictly using the provided context. "
-        "Use the retrieved context and facts to answer accurately. "
-        "If the provided information is insufficient, say so clearly."
+    system_message = (
+        "You are a helpful assistant that answers questions using the provided context. "
+        "Use the retrieved context and facts to answer accurately and concisely. "
+        "If the provided information is insufficient, say so clearly. "
+        "Base your answer only on the given context and structured facts."
     )
-    sections.append(f"INSTRUCTION:\n{instruction}\n")
 
-    # Vector context
+    user_content = f"Query: {query}\n\n"
+
     if vector_snippet:
-        sections.append(f"CONTEXT (vector retrieval):\n{vector_snippet}\n")
+        user_content += f"Context from vector search:\n{vector_snippet}\n\n"
 
-    # KG context
     if kg_triples:
         formatted_triples = _format_kg_triples(kg_triples)
-        sections.append(f"STRUCTURED FACTS (KG triples):\n{formatted_triples}\n")
+        user_content += f"Structured facts from knowledge graph:\n{formatted_triples}\n\n"
 
-    # Query
-    sections.append(f"QUERY:\n{query}")
+    user_content += "Please provide a direct answer to the query based on the above information."
 
-    prompt = "\n".join(sections)
+    # TinyLlama chat format
+    prompt = f"<|system|>\n{system_message}\n<|user|>\n{user_content}\n<|assistant|>\n"
+
     logger.debug("Built prompt of length %d", len(prompt))
     return prompt
 
