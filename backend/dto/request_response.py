@@ -50,9 +50,11 @@ class QueryResponse(BaseModel):
     Attributes:
         answer: Model-generated answer.
         test_mode: Echo of the test_mode used for this request.
+        final_prompt: The final prompt that was sent to the LLM.
         context_used: Optional details about retrieval context (for tracing).
     """
 
     answer: str = Field(..., description="Model answer")
     test_mode: str = Field(..., description="Echo of test_mode")
+    final_prompt: str = Field(..., description="Final prompt sent to the LLM")
     context_used: ContextUsed | None = Field(default=None, description="Retrieval context summary")
