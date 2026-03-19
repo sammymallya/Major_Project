@@ -23,12 +23,13 @@ class VectorDBSettings(BaseSettings):
 
     # Embedding model configuration
     embedding_model_name: str = Field(
-        default="all-MiniLM-L6-v2", alias="VECTORDB_EMBEDDING_MODEL_NAME"
+        default="all-roberta-large-v1", alias="VECTORDB_EMBEDDING_MODEL_NAME"
     )
 
     # Optional namespace support for isolating experiments within an index
+    # Default to 'tourism' to target the correct dataset namespace.
     pinecone_namespace: str | None = Field(
-        default=None, alias="VECTORDB_PINECONE_NAMESPACE"
+        default="tourism", alias="VECTORDB_PINECONE_NAMESPACE"
     )
 
     # pydantic-settings configuration

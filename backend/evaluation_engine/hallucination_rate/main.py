@@ -1,0 +1,140 @@
+"""
+Public interface for the Hallucination Rate component.
+
+Detects hallucinations by verifying claims against the memory layer.
+"""
+
+from __future__ import annotations
+
+import logging
+import re
+
+from sentence_transformers import SentenceTransformer, util  # type: ignore[import]
+
+from backend.kg import fetch_kg
+from backend.vector_db import fetch_top_vectordb
+
+from .config import HallucinationRateSettings, get_hallucination_rate_settings
+from .types import HallucinationRateResult
+
+logger = logging.getLogger(__name__)
+
+# Global model (lazy load)
+_model: SentenceTransformer | None = None
+
+
+def _load_model(settings: HallucinationRateSettings) -> None:
+    """Lazy load the sentence transformer model."""
+    global _model
+    if _model is None:
+        logger.info("Loading sentence-transformers model '%s' for hallucination detection", settings.embedding_model_name)
+        _model = SentenceTransformer(settings.embedding_model_name)
+
+
+def _split_into_sentences(text: str) -> list[str]:
+    """Simple sentence splitting using regex."""
+    # Split on period, question mark, exclamation mark followed by space or end
+    sentences = re.split(r'(?<=[.!?])\s+', text.strip())
+    return [s.strip() for s in sentences if s.strip()]
+
+
+def _verify_claim_against_memory(claim: str, settings: HallucinationRateSettings) -> bool:
+    """Verify a single claim against vector DB and KG."""
+    claim_emb = _model.encode(claim, convert_to_tensor=True)
+
+    # Check vector DB
+    vector_results, _ = fetch_top_vectordb(n=settings.vector_top_k, query=claim, include_debug=False)
+    if vector_results:
+        vector_texts = [r.text for r in vector_results]
+        vector_embs = _model.encode(vector_texts, convert_to_tensor=True)
+        vector_sims = util.cos_sim(claim_emb, vector_embs)[0]
+        max_vector_sim = max(vector_sims).item()
+        if max_vector_sim >= settings.similarity_threshold:
+            return True
+
+    # Check KG: fetch triples using the claim as cypher query? Wait, cypher query needs to be structured.
+    # Since KG fetch_kg takes a cypher query, but we have a natural language claim.
+    # Perhaps use the query structurer to get cypher from claim, but that might be overkill.
+    # For simplicity, since KG is graph, maybe skip or use a simple match.
+    # To keep it simple, perhaps only check vector DB for now, as KG verification is trickier without NLP.
+    # But user said check both. For KG, perhaps embed triples and compare.
+
+    # For KG, since fetch_kg needs cypher, perhaps generate a simple cypher like MATCH (p:Place) WHERE p.description CONTAINS claim words, but that's not semantic.
+    # To do semantic, fetch all triples? But that's inefficient.
+    # Perhaps use the reranker approach: fetch top triples via some query, then rerank against claim.
+
+    # For now, to implement, let's assume we use a dummy cypher to fetch some triples, then embed them.
+
+    # Actually, since KG has fetch_kg(cypher), and we need semantic match, perhaps use the vector approach for KG too, but KG is not vectorized.
+    # Perhaps skip KG for now and note it.
+
+    # To follow user: "query the memory layer with the claims and semantic match the retrieved data"
+
+    # For KG, perhaps use a broad cypher to get triples, then embed and match.
+
+    # Let's implement a simple way: for KG, use a cypher like "MATCH (p:Place) RETURN p.name AS subject, 'has_description' AS predicate, p.description AS object LIMIT 100" or something, then embed the triple texts.
+
+    # But to keep it simple, perhaps only vector DB for now, and add KG later.
+
+    # User said "memory layer (vector DB and KG)", so need both.
+
+    # For KG, since it's triples, perhaps embed the triple as "subject predicate object" and compare.
+
+    # But how to retrieve relevant triples? Use the claim as query to fetch_kg, but fetch_kg expects cypher.
+
+    # Perhaps use the query structurer to get cypher from claim, then fetch.
+
+    # That could work: call structure_query(claim, "kg_only") to get cypher, then fetch_kg(cypher), then embed the triples.
+
+    # Yes, that makes sense.
+
+    from backend.query_structurer import structure_query
+
+    structured = structure_query(claim, "kg_only")
+    if structured.cypher_query:
+        kg_triples = fetch_kg(structured.cypher_query)
+        if kg_triples:
+            kg_texts = [f"{t.subject} {t.predicate} {t.object}" for t in kg_triples]
+            kg_embs = _model.encode(kg_texts, convert_to_tensor=True)
+            kg_sims = util.cos_sim(claim_emb, kg_embs)[0]
+            max_kg_sim = max(kg_sims).item()
+            if max_kg_sim >= settings.similarity_threshold:
+                return True
+
+    return False
+
+
+def compute_hallucination_rate(actual_answer: str) -> HallucinationRateResult:
+    """
+    Compute hallucination rate by verifying claims against memory layer.
+
+    Args:
+        actual_answer: The answer generated by the pipeline.
+
+    Returns:
+        HallucinationRateResult with rate and counts.
+    """
+    settings = get_hallucination_rate_settings()
+    _load_model(settings)
+
+    logger.debug("Computing hallucination rate for answer length %d", len(actual_answer))
+
+    claims = _split_into_sentences(actual_answer)
+    total_claims = len(claims)
+    verified_claims = 0
+
+    for claim in claims:
+        if _verify_claim_against_memory(claim, settings):
+            verified_claims += 1
+
+    unverified_claims = total_claims - verified_claims
+    rate = unverified_claims / total_claims if total_claims > 0 else 0.0
+
+    logger.debug("Hallucination rate: %.4f (%d/%d unverified)", rate, unverified_claims, total_claims)
+
+    return HallucinationRateResult(
+        rate=rate,
+        total_claims=total_claims,
+        verified_claims=verified_claims,
+        unverified_claims=unverified_claims,
+    )

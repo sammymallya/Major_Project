@@ -218,105 +218,12 @@ def structure_query(query: str, output_kind: OutputKind) -> StructuredQuery:
         except Exception:
             return None
 
-    def _call_gemini(settings: "QueryStructurerSettings", prompt_text: str) -> str:
-        """Call the google.generativeai client in a resilient way and return raw text."""
-        genai.configure(api_key=settings.api_key)
-
-        # Try high-level generate() API
-        try:
-            if hasattr(genai, "generate"):
-                resp = genai.generate(model=settings.model_name, input=prompt_text, temperature=0.0)
-                logger.debug("Gemini raw response (generate): %s", repr(resp)[:2000])
-                # Try proto-aware extractor first
-                inner = _extract_from_proto_like(resp)
-                if inner:
-                    # normalize escaped JSON if present
-                    try:
-                        if inner.startswith('"') and inner.endswith('"'):
-                            inner = json.loads(inner)
-                    except Exception:
-                        pass
-                    # unescape common backslash-escaped JSON
-                    try:
-                        if '\\' in inner:
-                            cand = inner.encode('utf-8').decode('unicode_escape')
-                            if cand.strip().startswith('{'):
-                                inner = cand
-                    except Exception:
-                        pass
-                    logger.debug("Extracted inner text from proto-like resp (truncated): %s", inner[:1000])
-                    return inner
-                # fallback to generic extractor
-                text = _extract_text(resp)
-                if text:
-                    return text
-        except Exception:
-            logger.debug("genai.generate() attempt failed; falling back", exc_info=True)
-
-        # Try chat.create() shape
-        try:
-            if hasattr(genai, "chat") and hasattr(genai.chat, "create"):
-                messages = [
-                    {"role": "system", "content": _SYSTEM},
-                    {"role": "user", "content": prompt_text},
-                ]
-                resp = genai.chat.create(model=settings.model_name, messages=messages, temperature=0.0)
-                logger.debug("Gemini raw response (chat.create): %s", repr(resp)[:2000])
-                inner = _extract_from_proto_like(resp)
-                if inner:
-                    try:
-                        if inner.startswith('"') and inner.endswith('"'):
-                            inner = json.loads(inner)
-                    except Exception:
-                        pass
-                    try:
-                        if '\\' in inner:
-                            cand = inner.encode('utf-8').decode('unicode_escape')
-                            if cand.strip().startswith('{'):
-                                inner = cand
-                    except Exception:
-                        pass
-                    logger.debug("Extracted inner text from proto-like chat resp (truncated): %s", inner[:1000])
-                    return inner
-                text = _extract_text(resp)
-                if text:
-                    return text
-        except Exception:
-            logger.debug("genai.chat.create() attempt failed; falling back", exc_info=True)
-
-        # Try the GenerativeModel wrapper (older/newer shape compatibility)
-        try:
-            model = genai.GenerativeModel(settings.model_name, system_instruction=_SYSTEM)
-            response = model.generate_content(prompt_text, generation_config={"temperature": 0.0})
-            logger.debug("Gemini raw response (GenerativeModel.generate_content): %s", repr(response)[:2000])
-            inner = _extract_from_proto_like(response)
-            if inner:
-                try:
-                    if inner.startswith('"') and inner.endswith('"'):
-                        inner = json.loads(inner)
-                except Exception:
-                    pass
-                try:
-                    if '\\' in inner:
-                        cand = inner.encode('utf-8').decode('unicode_escape')
-                        if cand.strip().startswith('{'):
-                            inner = cand
-                except Exception:
-                    pass
-                logger.debug("Extracted inner text from GenerativeModel resp (truncated): %s", inner[:1000])
-                return inner
-            # response may expose .text or nested structure
-            text = _extract_text(response)
-            if text:
-                return text
-        except Exception:
-            logger.exception("Query structurer Gemini call failed (all attempts)")
-
-        # As a last-resort fallback return empty string so callers can handle it
-        return ""
+    # Limit Gemini API calls per query structuring invocation (avoids runaway retries).
+    call_counter = {"count": 0}
+    max_calls = 2
 
     try:
-        content = _call_gemini(settings, prompt) or ""
+        content = _call_gemini(settings, prompt, call_counter=call_counter, max_calls=max_calls) or ""
         content = content.strip()
         # Always log the raw content at INFO so callers (and CLI tests) can see
         # exactly what the LLM returned and debug parsing issues.
@@ -341,3 +248,125 @@ def structure_query(query: str, output_kind: OutputKind) -> StructuredQuery:
 
     logger.debug("Structured query: semantic=%s cypher=%s", _trunc(result.semantic_search_query), _trunc(result.cypher_query))
     return result
+
+
+def _call_gemini(
+    settings: "QueryStructurerSettings",
+    prompt_text: str,
+    call_counter: dict[str, int],
+    max_calls: int = 2,
+) -> str:
+    """Call the google.generativeai client in a resilient way and return raw text.
+
+    Ensures we never call Gemini more than `max_calls` times per invocation.
+    """
+    if call_counter["count"] >= max_calls:
+        raise RuntimeError(
+            f"Gemini API rate limit exceeded: attempted {call_counter['count']} calls (max {max_calls})"
+        )
+
+    genai.configure(api_key=settings.api_key)
+
+    # Helper to mark a call attempt
+    def _mark_call() -> None:
+        call_counter["count"] += 1
+        if call_counter["count"] > max_calls:
+            raise RuntimeError(
+                f"Gemini API rate limit exceeded: attempted {call_counter['count']} calls (max {max_calls})"
+            )
+
+    # Try high-level generate() API
+    try:
+        if hasattr(genai, "generate"):
+            _mark_call()
+            resp = genai.generate(model=settings.model_name, input=prompt_text, temperature=0.0)
+            logger.debug("Gemini raw response (generate): %s", repr(resp)[:2000])
+            # Try proto-aware extractor first
+            inner = _extract_from_proto_like(resp)
+            if inner:
+                # normalize escaped JSON if present
+                try:
+                    if inner.startswith('"') and inner.endswith('"'):
+                        inner = json.loads(inner)
+                except Exception:
+                    pass
+                # unescape common backslash-escaped JSON
+                try:
+                    if '\\' in inner:
+                        cand = inner.encode('utf-8').decode('unicode_escape')
+                        if cand.strip().startswith('{'):
+                            inner = cand
+                except Exception:
+                    pass
+                logger.debug("Extracted inner text from proto-like resp (truncated): %s", inner[:1000])
+                return inner
+            # fallback to generic extractor
+            text = _extract_text(resp)
+            if text:
+                return text
+    except Exception:
+        logger.debug("genai.generate() attempt failed; falling back", exc_info=True)
+
+    # Try chat.create() shape
+    try:
+        if hasattr(genai, "chat") and hasattr(genai.chat, "create"):
+            _mark_call()
+            messages = [
+                {"role": "system", "content": _SYSTEM},
+                {"role": "user", "content": prompt_text},
+            ]
+            resp = genai.chat.create(model=settings.model_name, messages=messages, temperature=0.0)
+            logger.debug("Gemini raw response (chat.create): %s", repr(resp)[:2000])
+            inner = _extract_from_proto_like(resp)
+            if inner:
+                try:
+                    if inner.startswith('"') and inner.endswith('"'):
+                        inner = json.loads(inner)
+                except Exception:
+                    pass
+                try:
+                    if '\\' in inner:
+                        cand = inner.encode('utf-8').decode('unicode_escape')
+                        if cand.strip().startswith('{'):
+                            inner = cand
+                except Exception:
+                    pass
+                logger.debug("Extracted inner text from proto-like chat resp (truncated): %s", inner[:1000])
+                return inner
+            text = _extract_text(resp)
+            if text:
+                return text
+    except Exception:
+        logger.debug("genai.chat.create() attempt failed; falling back", exc_info=True)
+
+    # Try the GenerativeModel wrapper (older/newer shape compatibility)
+    try:
+        _mark_call()
+        model = genai.GenerativeModel(settings.model_name, system_instruction=_SYSTEM)
+        response = model.generate_content(prompt_text, generation_config={"temperature": 0.0})
+        logger.debug("Gemini raw response (GenerativeModel.generate_content): %s", repr(response)[:2000])
+        inner = _extract_from_proto_like(response)
+        if inner:
+            try:
+                if inner.startswith('"') and inner.endswith('"'):
+                    inner = json.loads(inner)
+            except Exception:
+                pass
+            try:
+                if '\\' in inner:
+                    cand = inner.encode('utf-8').decode('unicode_escape')
+                    if cand.strip().startswith('{'):
+                        inner = cand
+            except Exception:
+                pass
+            logger.debug("Extracted inner text from GenerativeModel resp (truncated): %s", inner[:1000])
+            return inner
+        # response may expose .text or nested structure
+        text = _extract_text(response)
+        if text:
+            return text
+    except Exception:
+        logger.exception("Query structurer Gemini call failed (all attempts)")
+
+    # As a last-resort fallback return empty string so callers can handle it
+    return ""

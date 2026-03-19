@@ -1,0 +1,40 @@
+{
+  "queries": [
+    {
+      "query": "What are some beaches in Mangalore?",
+      "expected_answer": "Mangalore has several beaches including Panambur Beach, Tannirbhavi Beach, and Someshwara Beach.",
+      "modes": {
+        "none": {
+          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:56:36 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '50', 'x-envoy-upstream-service-time': '60', 'x-pinecone-response-duration-ms': '62', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+        },
+        "vectordb": {
+          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:56:38 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '0', 'x-envoy-upstream-service-time': '1', 'x-pinecone-response-duration-ms': '2', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+        },
+        "kg": {
+          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:56:52 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '35', 'x-envoy-upstream-service-time': '36', 'x-pinecone-response-duration-ms': '37', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+        },
+        "hybrid": {
+          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:56:55 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '57', 'x-envoy-upstream-service-time': '58', 'x-pinecone-response-duration-ms': '59', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+        }
+      }
+    },
+    {
+      "query": "Tell me about temples in Udupi.",
+      "expected_answer": "Udupi is famous for the Udupi Sri Krishna Temple, known for its Krishna idol and traditional cuisine.",
+      "modes": {
+        "none": {
+          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:57:01 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '0', 'x-envoy-upstream-service-time': '0', 'x-pinecone-response-duration-ms': '2', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+        },
+        "vectordb": {
+          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:57:03 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '36', 'x-envoy-upstream-service-time': '37', 'x-pinecone-response-duration-ms': '38', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+        },
+        "kg": {
+          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:57:13 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '33', 'x-envoy-upstream-service-time': '34', 'x-pinecone-response-duration-ms': '37', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+        },
+        "hybrid": {
+          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:57:17 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '0', 'x-envoy-upstream-service-time': '0', 'x-pinecone-response-duration-ms': '2', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+        }
+      }
+    }
+  ]
+}
