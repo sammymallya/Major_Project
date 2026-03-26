@@ -1,38 +1,258 @@
 {
-  "queries": [
+  "metadata": {
+    "modes": [
+      "none",
+      "vectordb",
+      "kg",
+      "hybrid"
+    ],
+    "test_data_path": "test_data.json",
+    "query_count": 2,
+    "selected_config": {
+      "vector_top_k": 10,
+      "rerank_top_n": 1,
+      "kg_rerank_top_n": 1,
+      "context_budget": 1600
+    },
+    "single_run_per_mode": true,
+    "calibration_enabled": false
+  },
+  "summary": {
+    "none": {
+      "avg_semantic_similarity": -0.003638606518507004,
+      "avg_f1_score": 0.07692307692307691,
+      "avg_precision": 0.1111111111111111,
+      "avg_recall": 0.058823529411764705,
+      "avg_hallucination_rate": 1.0,
+      "avg_faithfulness": 0.0,
+      "avg_total_claims": 1.0,
+      "avg_grounded_claims": 0.0,
+      "avg_ungrounded_claims": 1.0,
+      "count": 2.0
+    },
+    "vectordb": {
+      "avg_semantic_similarity": -0.003638606518507004,
+      "avg_f1_score": 0.07692307692307691,
+      "avg_precision": 0.1111111111111111,
+      "avg_recall": 0.058823529411764705,
+      "avg_hallucination_rate": 1.0,
+      "avg_faithfulness": 0.0,
+      "avg_total_claims": 1.0,
+      "avg_grounded_claims": 0.0,
+      "avg_ungrounded_claims": 1.0,
+      "count": 2.0,
+      "improvement_over_none_percent": {
+        "semantic_similarity": 0.0,
+        "f1_score": 0.0,
+        "hallucination_rate": 0.0,
+        "faithfulness": null
+      }
+    },
+    "kg": {
+      "avg_semantic_similarity": 0.5030162930488586,
+      "avg_f1_score": 0.19548872180451127,
+      "avg_precision": 0.75,
+      "avg_recall": 0.11274509803921567,
+      "avg_hallucination_rate": 0.0,
+      "avg_faithfulness": 1.0,
+      "avg_total_claims": 1.0,
+      "avg_grounded_claims": 1.0,
+      "avg_ungrounded_claims": 0.0,
+      "count": 2.0,
+      "improvement_over_none_percent": {
+        "semantic_similarity": 13924.421258258413,
+        "f1_score": 154.13533834586468,
+        "hallucination_rate": 100.0,
+        "faithfulness": null
+      }
+    },
+    "hybrid": {
+      "avg_semantic_similarity": 0.43814072012901306,
+      "avg_f1_score": 0.11513157894736842,
+      "avg_precision": 0.375,
+      "avg_recall": 0.07107843137254902,
+      "avg_hallucination_rate": 0.0,
+      "avg_faithfulness": 1.0,
+      "avg_total_claims": 1.0,
+      "avg_grounded_claims": 1.0,
+      "avg_ungrounded_claims": 0.0,
+      "count": 2.0,
+      "improvement_over_none_percent": {
+        "semantic_similarity": 12141.442730905439,
+        "f1_score": 49.67105263157896,
+        "hallucination_rate": 100.0,
+        "faithfulness": null
+      }
+    }
+  },
+  "records": [
     {
       "query": "What are some beaches in Mangalore?",
-      "expected_answer": "Mangalore has several beaches including Panambur Beach, Tannirbhavi Beach, and Someshwara Beach.",
+      "ground_truth": "Mangalore has several beaches including Panambur Beach, Tannirbhavi Beach, and Someshwara Beach.",
       "modes": {
         "none": {
-          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:56:36 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '50', 'x-envoy-upstream-service-time': '60', 'x-pinecone-response-duration-ms': '62', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+          "answer": "No retrieval context provided.",
+          "retrieved_context": [],
+          "retrieved_context_count": 0,
+          "semantic_similarity": -0.03965791314840317,
+          "f1_score": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "hallucination_rate": 1.0,
+          "faithfulness": 0.0,
+          "total_claims": 1,
+          "grounded_claims": 0,
+          "ungrounded_claims": 1,
+          "improvement_over_none_percent": null
         },
         "vectordb": {
-          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:56:38 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '0', 'x-envoy-upstream-service-time': '1', 'x-pinecone-response-duration-ms': '2', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+          "answer": "No retrieval context provided.",
+          "retrieved_context": [],
+          "retrieved_context_count": 0,
+          "semantic_similarity": -0.03965791314840317,
+          "f1_score": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "hallucination_rate": 1.0,
+          "faithfulness": 0.0,
+          "total_claims": 1,
+          "grounded_claims": 0,
+          "ungrounded_claims": 1,
+          "improvement_over_none_percent": {
+            "semantic_similarity": 0.0,
+            "f1_score": null,
+            "hallucination_rate": 0.0,
+            "faithfulness": null
+          }
         },
         "kg": {
-          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:56:52 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '35', 'x-envoy-upstream-service-time': '36', 'x-pinecone-response-duration-ms': '37', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+          "answer": "Someshwara Beach",
+          "retrieved_context": [
+            "Someshwara Beach --LOCATED_IN--> Mangalore"
+          ],
+          "retrieved_context_count": 1,
+          "semantic_similarity": 0.5895818471908569,
+          "f1_score": 0.2857142857142857,
+          "precision": 1.0,
+          "recall": 0.16666666666666666,
+          "hallucination_rate": 0.0,
+          "faithfulness": 1.0,
+          "total_claims": 1,
+          "grounded_claims": 1,
+          "ungrounded_claims": 0,
+          "improvement_over_none_percent": {
+            "semantic_similarity": 1586.6688647599617,
+            "f1_score": null,
+            "hallucination_rate": 100.0,
+            "faithfulness": null
+          }
         },
         "hybrid": {
-          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:56:55 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '57', 'x-envoy-upstream-service-time': '58', 'x-pinecone-response-duration-ms': '59', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+          "answer": "Thannirbavi Tree Park Beach",
+          "retrieved_context": [
+            "Thannirbavi Tree Park Beach --LOCATED_IN--> Mangalore"
+          ],
+          "retrieved_context_count": 1,
+          "semantic_similarity": 0.45983070135116577,
+          "f1_score": 0.125,
+          "precision": 0.25,
+          "recall": 0.08333333333333333,
+          "hallucination_rate": 0.0,
+          "faithfulness": 1.0,
+          "total_claims": 1,
+          "grounded_claims": 1,
+          "ungrounded_claims": 0,
+          "improvement_over_none_percent": {
+            "semantic_similarity": 1259.4929355723825,
+            "f1_score": null,
+            "hallucination_rate": 100.0,
+            "faithfulness": null
+          }
         }
       }
     },
     {
       "query": "Tell me about temples in Udupi.",
-      "expected_answer": "Udupi is famous for the Udupi Sri Krishna Temple, known for its Krishna idol and traditional cuisine.",
+      "ground_truth": "Udupi is famous for the Udupi Sri Krishna Temple, known for its Krishna idol and traditional cuisine.",
       "modes": {
         "none": {
-          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:57:01 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '0', 'x-envoy-upstream-service-time': '0', 'x-pinecone-response-duration-ms': '2', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+          "answer": "The answer is not available in the provided context.",
+          "retrieved_context": [],
+          "retrieved_context_count": 0,
+          "semantic_similarity": 0.03238070011138916,
+          "f1_score": 0.15384615384615383,
+          "precision": 0.2222222222222222,
+          "recall": 0.11764705882352941,
+          "hallucination_rate": 1.0,
+          "faithfulness": 0.0,
+          "total_claims": 1,
+          "grounded_claims": 0,
+          "ungrounded_claims": 1,
+          "improvement_over_none_percent": null
         },
         "vectordb": {
-          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:57:03 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '36', 'x-envoy-upstream-service-time': '37', 'x-pinecone-response-duration-ms': '38', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+          "answer": "The answer is not available in the provided context.",
+          "retrieved_context": [],
+          "retrieved_context_count": 0,
+          "semantic_similarity": 0.03238070011138916,
+          "f1_score": 0.15384615384615383,
+          "precision": 0.2222222222222222,
+          "recall": 0.11764705882352941,
+          "hallucination_rate": 1.0,
+          "faithfulness": 0.0,
+          "total_claims": 1,
+          "grounded_claims": 0,
+          "ungrounded_claims": 1,
+          "improvement_over_none_percent": {
+            "semantic_similarity": 0.0,
+            "f1_score": 0.0,
+            "hallucination_rate": 0.0,
+            "faithfulness": null
+          }
         },
         "kg": {
-          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:57:13 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '33', 'x-envoy-upstream-service-time': '34', 'x-pinecone-response-duration-ms': '37', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+          "answer": "Chandramouleshwara Temple",
+          "retrieved_context": [
+            "Chandramouleshwara Temple --LOCATED_IN--> Udupi"
+          ],
+          "retrieved_context_count": 1,
+          "semantic_similarity": 0.41645073890686035,
+          "f1_score": 0.10526315789473684,
+          "precision": 0.5,
+          "recall": 0.058823529411764705,
+          "hallucination_rate": 0.0,
+          "faithfulness": 1.0,
+          "total_claims": 1,
+          "grounded_claims": 1,
+          "ungrounded_claims": 0,
+          "improvement_over_none_percent": {
+            "semantic_similarity": 1186.1078898055805,
+            "f1_score": -31.578947368421044,
+            "hallucination_rate": 100.0,
+            "faithfulness": null
+          }
         },
         "hybrid": {
-          "error": "(400)\nReason: Bad Request\nHTTP response headers: HTTPHeaderDict({'Date': 'Thu, 19 Mar 2026 04:57:17 GMT', 'Content-Type': 'application/json', 'Content-Length': '103', 'Connection': 'keep-alive', 'x-pinecone-request-latency-ms': '0', 'x-envoy-upstream-service-time': '0', 'x-pinecone-response-duration-ms': '2', 'server': 'envoy'})\nHTTP response body: {\"code\":3,\"message\":\"Vector dimension 384 does not match the dimension of the index 1024\",\"details\":[]}\n"
+          "answer": "Chandramouleshwara Temple",
+          "retrieved_context": [
+            "Chandramouleshwara Temple --LOCATED_IN--> Udupi"
+          ],
+          "retrieved_context_count": 1,
+          "semantic_similarity": 0.41645073890686035,
+          "f1_score": 0.10526315789473684,
+          "precision": 0.5,
+          "recall": 0.058823529411764705,
+          "hallucination_rate": 0.0,
+          "faithfulness": 1.0,
+          "total_claims": 1,
+          "grounded_claims": 1,
+          "ungrounded_claims": 0,
+          "improvement_over_none_percent": {
+            "semantic_similarity": 1186.1078898055805,
+            "f1_score": -31.578947368421044,
+            "hallucination_rate": 100.0,
+            "faithfulness": null
+          }
         }
       }
     }

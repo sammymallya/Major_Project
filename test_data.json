@@ -1,10 +1,10 @@
 [
   {
     "query": "What are some beaches in Mangalore?",
-    "expected_answer": "Mangalore has several beaches including Panambur Beach, Tannirbhavi Beach, and Someshwara Beach."
+    "answer": "Mangalore has several beaches including Panambur Beach, Tannirbhavi Beach, and Someshwara Beach."
   },
   {
     "query": "Tell me about temples in Udupi.",
-    "expected_answer": "Udupi is famous for the Udupi Sri Krishna Temple, known for its Krishna idol and traditional cuisine."
+    "answer": "Udupi is famous for the Udupi Sri Krishna Temple, known for its Krishna idol and traditional cuisine."
   }
 ]

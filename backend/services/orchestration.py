@@ -8,6 +8,7 @@ stub Test LLM. Returns a dict suitable for QueryResponse.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 import logging
 from typing import Literal
 
@@ -25,10 +26,42 @@ logger = logging.getLogger(__name__)
 
 TestMode = Literal["vectordb", "kg", "hybrid", "none"]
 
-# Retrieval limits used by the pipeline (configurable later if needed)
-VECTOR_TOP_K = 10
-RERANK_TOP_N = 1
-KG_RERANK_TOP_N = 1
+# Retrieval limits used by the pipeline.
+_RETRIEVAL_LIMITS = {
+    "vector_top_k": 10,
+    "rerank_top_n": 1,
+    "kg_rerank_top_n": 1,
+}
+
+
+@dataclass
+class EvaluationPipelineResult:
+    """Pipeline output normalized for evaluation runs."""
+
+    answer: str
+    test_mode: TestMode
+    final_prompt: str
+    retrieved_context: list[str]
+
+
+def get_retrieval_limits() -> dict[str, int]:
+    """Return currently active retrieval limits."""
+    return dict(_RETRIEVAL_LIMITS)
+
+
+def set_retrieval_limits(
+    *,
+    vector_top_k: int | None = None,
+    rerank_top_n: int | None = None,
+    kg_rerank_top_n: int | None = None,
+) -> None:
+    """Update retrieval limits used by run_pipeline."""
+    if vector_top_k is not None:
+        _RETRIEVAL_LIMITS["vector_top_k"] = max(1, int(vector_top_k))
+    if rerank_top_n is not None:
+        _RETRIEVAL_LIMITS["rerank_top_n"] = max(1, int(rerank_top_n))
+    if kg_rerank_top_n is not None:
+        _RETRIEVAL_LIMITS["kg_rerank_top_n"] = max(1, int(kg_rerank_top_n))
 
 
 def _call_test_llm_stub(prompt: str) -> str:
@@ -51,6 +84,10 @@ def run_pipeline(query: str, test_mode: TestMode) -> QueryResponse:
     """
     logger.info("Running pipeline with test_mode=%s", test_mode)
 
+    vector_top_k = _RETRIEVAL_LIMITS["vector_top_k"]
+    rerank_top_n = _RETRIEVAL_LIMITS["rerank_top_n"]
+    kg_rerank_top_n = _RETRIEVAL_LIMITS["kg_rerank_top_n"]
+
     vector_snippet: str | None = None
     kg_triples: list = []
 
@@ -67,13 +104,13 @@ def run_pipeline(query: str, test_mode: TestMode) -> QueryResponse:
         # Vector path
         if structured.semantic_search_query:
             search_query = structured.semantic_search_query
-            logger.debug("Vector path: fetching top_k=%d then reranking top_n=%d", VECTOR_TOP_K, RERANK_TOP_N)
-            candidates, _ = fetch_top_vectordb(n=VECTOR_TOP_K, query=search_query, include_debug=False)
+            logger.debug("Vector path: fetching top_k=%d then reranking top_n=%d", vector_top_k, rerank_top_n)
+            candidates, _ = fetch_top_vectordb(n=vector_top_k, query=search_query, include_debug=False)
             if candidates:
                 reranked, _ = rerank_top_cross_encoder(
                     query=search_query,
                     candidates=candidates,
-                    top_n=RERANK_TOP_N,
+                    top_n=rerank_top_n,
                     include_debug=False,
                 )
                 if reranked:
@@ -88,14 +125,14 @@ def run_pipeline(query: str, test_mode: TestMode) -> QueryResponse:
         if structured.cypher_query:
             logger.info("Generated Cypher query: %s", structured.cypher_query)
             kg_triples = fetch_kg(structured.cypher_query)
-            logger.debug("KG path: fetched %d triple(s), reranking top_n=%d", len(kg_triples), KG_RERANK_TOP_N)
+            logger.debug("KG path: fetched %d triple(s), reranking top_n=%d", len(kg_triples), kg_rerank_top_n)
             if kg_triples:
                 # Use the semantic search query if available, else use the original query
                 rerank_query = structured.semantic_search_query or query
                 reranked, _ = rerank_kg_triples(
                     query=rerank_query,
                     triples=kg_triples,
-                    top_n=KG_RERANK_TOP_N,
+                    top_n=kg_rerank_top_n,
                     include_debug=False,
                 )
                 if reranked:
@@ -138,4 +175,22 @@ def run_pipeline(query: str, test_mode: TestMode) -> QueryResponse:
         test_mode=test_mode,
         final_prompt=final_prompt,
         context_used=context_used,
+    )
+
+
+def run_pipeline_for_evaluation(query: str, test_mode: TestMode) -> EvaluationPipelineResult:
+    """Run pipeline and normalize context into a compact list for metrics."""
+    response = run_pipeline(query=query, test_mode=test_mode)
+    context: list[str] = []
+
+    if response.context_used and response.context_used.vector_snippet:
+        context.append(response.context_used.vector_snippet)
+    if response.context_used and response.context_used.kg_snippet:
+        context.append(response.context_used.kg_snippet)
+
+    return EvaluationPipelineResult(
+        answer=response.answer,
+        test_mode=test_mode,
+        final_prompt=response.final_prompt,
+        retrieved_context=context,
     )

@@ -1,0 +1,9 @@
+query,mode,semantic_similarity,f1_score,precision,recall,hallucination_rate,faithfulness,total_claims,grounded_claims,ungrounded_claims
+What are some beaches in Mangalore?,none,-0.03965791314840317,0.0,0.0,0.0,1.0,0.0,1,0,1
+What are some beaches in Mangalore?,vectordb,-0.03965791314840317,0.0,0.0,0.0,1.0,0.0,1,0,1
+What are some beaches in Mangalore?,kg,0.5895818471908569,0.2857142857142857,1.0,0.16666666666666666,0.0,1.0,1,1,0
+What are some beaches in Mangalore?,hybrid,0.45983070135116577,0.125,0.25,0.08333333333333333,0.0,1.0,1,1,0
+Tell me about temples in Udupi.,none,0.03238070011138916,0.15384615384615383,0.2222222222222222,0.11764705882352941,1.0,0.0,1,0,1
+Tell me about temples in Udupi.,vectordb,0.03238070011138916,0.15384615384615383,0.2222222222222222,0.11764705882352941,1.0,0.0,1,0,1
+Tell me about temples in Udupi.,kg,0.41645073890686035,0.10526315789473684,0.5,0.058823529411764705,0.0,1.0,1,1,0
+Tell me about temples in Udupi.,hybrid,0.41645073890686035,0.10526315789473684,0.5,0.058823529411764705,0.0,1.0,1,1,0

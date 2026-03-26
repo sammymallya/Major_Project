@@ -9,15 +9,33 @@ The prompt format is designed for benchmarking and later swapping in a real LLM.
 from __future__ import annotations
 
 import logging
-from typing import List
 
 from backend.kg.types import KgTriple
 
 logger = logging.getLogger(__name__)
 
+_PROMPT_CONTEXT_BUDGET = 1600
+
+
+def get_prompt_context_budget() -> int:
+    """Return the active context budget in characters."""
+    return _PROMPT_CONTEXT_BUDGET
+
+
+def set_prompt_context_budget(char_budget: int) -> None:
+    """Set prompt context budget in characters."""
+    global _PROMPT_CONTEXT_BUDGET
+    _PROMPT_CONTEXT_BUDGET = max(300, int(char_budget))
+
+
+def _trim_to_budget(text: str, budget: int) -> str:
+    if len(text) <= budget:
+        return text
+    return text[: max(0, budget - 3)] + "..."
+
 
 def build_prompt(query: str, vector_snippet: str | None, kg_triples: list[KgTriple] | None) -> str:
-    """Build a chat-style prompt for TinyLlama.
+    """Build a FLAN-style instruction prompt.
 
     Args:
         query: User question.
@@ -25,29 +43,33 @@ def build_prompt(query: str, vector_snippet: str | None, kg_triples: list[KgTrip
         kg_triples: Retrieved KG triples (or None).
 
     Returns:
-        A formatted prompt string in chat format.
+        A formatted instruction prompt string.
     """
 
-    system_message = (
-        "You are a helpful assistant that answers questions using the provided context. "
-        "Use the retrieved context and facts to answer accurately and concisely. "
-        "If the provided information is insufficient, say so clearly. "
-        "Base your answer only on the given context and structured facts."
+    instruction = (
+        "Answer the query using only the supplied context. "
+        "If context is insufficient, explicitly say that the answer is not available in the provided context. "
+        "Keep the answer factual and concise."
     )
 
-    user_content = f"Query: {query}\n\n"
+    context_sections: list[str] = []
 
     if vector_snippet:
-        user_content += f"Context from vector search:\n{vector_snippet}\n\n"
+        context_sections.append(f"Vector context:\n{vector_snippet}")
 
     if kg_triples:
         formatted_triples = _format_kg_triples(kg_triples)
-        user_content += f"Structured facts from knowledge graph:\n{formatted_triples}\n\n"
+        context_sections.append(f"Knowledge graph facts:\n{formatted_triples}")
 
-    user_content += "Please provide a direct answer to the query based on the above information."
+    context_blob = "\n\n".join(context_sections) if context_sections else "No retrieval context provided."
+    context_blob = _trim_to_budget(context_blob, _PROMPT_CONTEXT_BUDGET)
 
-    # TinyLlama chat format
-    prompt = f"<|system|>\n{system_message}\n<|user|>\n{user_content}\n<|assistant|>\n"
+    prompt = (
+        f"Instruction:\n{instruction}\n\n"
+        f"Query:\n{query}\n\n"
+        f"Context:\n{context_blob}\n\n"
+        "Answer:\n"
+    )
 
     logger.debug("Built prompt of length %d", len(prompt))
     return prompt
