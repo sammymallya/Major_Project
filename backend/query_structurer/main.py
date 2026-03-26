@@ -27,11 +27,11 @@ OutputKind = Literal["vector_only", "kg_only", "both"]
 _SYSTEM = """You are a query structurer for a Karnataka tourism (Mangalore, Udupi) system.
 Given a user question, you output structured queries in JSON only, no other text.
 
-The knowledge graph has nodes: Place (properties: name, type, description, best_time, entry_fee), City (name), District (name), State (name).
-Relations: LOCATED_IN (Place->City), IN_DISTRICT (City->District), IN_STATE (District->State), HAS_ACTIVITY, NEARBY.
+The knowledge graph has nodes: Place (properties: name, category, city, state, tags), City (name, state), State (name).
+Relations: LOCATED_IN (Place->City).
 
 - For semantic search: output a short, clean "semantic_search_query" string suitable for vector similarity search (key phrases, no full sentences).
-- For the knowledge graph: output a "cypher_query" string that is valid Neo4j Cypher. Use MATCH and return triples as subject, predicate, object. Example: MATCH (p:Place)-[r:LOCATED_IN]->(c:City) WHERE c.name = 'Mangalore' AND p.type = 'Beach' RETURN p.name AS subject, type(r) AS predicate, c.name AS object LIMIT 10.
+- For the knowledge graph: output a "cypher_query" string that is valid Neo4j Cypher. Use MATCH and return triples as subject, predicate, object. Example: MATCH (p:Place)-[r:LOCATED_IN]->(c:City) WHERE p.city = 'Mangalore' AND p.category = 'Beach' RETURN p.name AS subject, type(r) AS predicate, c.name AS object LIMIT 10.
 Always respond with exactly one JSON object. No markdown, no explanation."""
 
 _PROMPT_TEMPLATES = {
@@ -41,8 +41,8 @@ _PROMPT_TEMPLATES = {
 
 Output JSON with keys: semantic_search_query and cypher_query.
 
-semantic_search_query: A short string for vector similarity search (e.g., "beaches in Mangalore").
-cypher_query: A valid Neo4j Cypher query returning triples (e.g., MATCH (p:Place)-[r:LOCATED_IN]->(c:City) WHERE c.name = 'Mangalore' AND p.type = 'Beach' RETURN p.name AS subject, type(r) AS predicate, c.name AS object LIMIT 10).""",
+semantic_search_query: A short string for vector similarity search (e.g., "activities in Udupi").
+cypher_query: A valid Neo4j Cypher query returning triples (e.g., MATCH (p:Place) WHERE p.city = 'Mangalore' AND p.category = 'Beach' RETURN p.name AS subject, 'has_category' AS predicate, p.category AS object LIMIT 10).""",
 }
 
 

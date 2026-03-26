@@ -21,8 +21,7 @@ _driver = None
 _schema_cache = {
     "cities": None,
     "states": None,
-    "types": None,
-    "districts": None,
+    "categories": None,
 }
 
 
@@ -48,7 +47,7 @@ def _get_driver():
 
 
 def _load_schema_values():
-    """Load distinct schema values (cities, states, types, districts) and cache them."""
+    """Load distinct schema values (cities, states, categories) and cache them."""
     if _schema_cache["cities"] is not None:
         return
 
@@ -63,25 +62,20 @@ def _load_schema_values():
         except Exception:
             ALL_STATES = []
         try:
-            ALL_TYPES = [r["type"].lower() for r in session.run("MATCH (p:Place) RETURN DISTINCT p.type AS type") if r["type"]]
+            ALL_CATEGORIES = [r["category"].lower() for r in session.run("MATCH (p:Place) RETURN DISTINCT p.category AS category") if r["category"]]
         except Exception:
-            ALL_TYPES = []
-        try:
-            ALL_DISTRICTS = [r["name"].lower() for r in session.run("MATCH (d:District) RETURN DISTINCT d.name AS name") if r["name"]]
-        except Exception:
-            ALL_DISTRICTS = []
+            ALL_CATEGORIES = []
 
     _schema_cache["cities"] = ALL_CITIES
     _schema_cache["states"] = ALL_STATES
-    _schema_cache["types"] = ALL_TYPES
-    _schema_cache["districts"] = ALL_DISTRICTS
+    _schema_cache["categories"] = ALL_CATEGORIES
 
 
 def extract_entities(question: str) -> dict:
     """Deterministic entity extraction using cached schema values."""
     _load_schema_values()
     q = question.lower()
-    intent = {"city": None, "state": None, "type": None, "district": None}
+    intent = {"city": None, "state": None, "category": None}
 
     for city in (_schema_cache["cities"] or []):
         if f" {city} " in f" {q} ":
@@ -91,13 +85,9 @@ def extract_entities(question: str) -> dict:
         if f" {state} " in f" {q} ":
             intent["state"] = state.title()
 
-    for t in (_schema_cache["types"] or []):
-        if f" {t} " in f" {q} ":
-            intent["type"] = t.title()
-
-    for district in (_schema_cache["districts"] or []):
-        if f" {district} " in f" {q} ":
-            intent["district"] = district.title()
+    for category in (_schema_cache["categories"] or []):
+        if f" {category} " in f" {q} ":
+            intent["category"] = category.title()
 
     return intent
 
@@ -106,31 +96,26 @@ def build_query(intent: dict) -> tuple[str, dict]:
     """Build a Cypher query and parameter dict from extracted intent."""
     query = """
     MATCH (p:Place)
-    OPTIONAL MATCH (p)-[:LOCATED_IN]->(c:City)
-    OPTIONAL MATCH (c)-[:IN_DISTRICT]->(d:District)
-    OPTIONAL MATCH (d)-[:IN_STATE]->(s:State)
     WHERE 1=1
     """
 
     params: dict = {}
     if intent.get("city"):
-        query += " AND c.name = $city"
+        query += " AND p.city = $city"
         params["city"] = intent["city"]
     if intent.get("state"):
-        query += " AND s.name = $state"
+        query += " AND p.state = $state"
         params["state"] = intent["state"]
-    if intent.get("type"):
-        query += " AND p.type = $type"
-        params["type"] = intent["type"]
-    if intent.get("district"):
-        query += " AND d.name = $district"
-        params["district"] = intent["district"]
+    if intent.get("category"):
+        query += " AND p.category = $category"
+        params["category"] = intent["category"]
 
     query += """
     RETURN DISTINCT p.name AS name,
-           p.description AS description,
-           p.best_time AS best_time,
-           p.entry_fee AS entry_fee
+           p.category AS category,
+           p.city AS city,
+           p.state AS state,
+           p.tags AS tags
     LIMIT 20
     """
 
@@ -152,12 +137,18 @@ def format_answer(question: str, data: list[dict]) -> str:
     answer = f"Here are some results for '{question}':\n\n"
     for place in data:
         answer += f"🔹 {place.get('name')}\n"
-        if place.get("description"):
-            answer += f"   {place.get('description')}\n"
-        if place.get("best_time"):
-            answer += f"   Best time to visit: {place.get('best_time')}\n"
-        if place.get("entry_fee"):
-            answer += f"   Entry fee: {place.get('entry_fee')}\n"
+        if place.get("category"):
+            answer += f"   Category: {place.get('category')}\n"
+        if place.get("city"):
+            answer += f"   City: {place.get('city')}\n"
+        if place.get("state"):
+            answer += f"   State: {place.get('state')}\n"
+        if place.get("tags"):
+            tags = place.get('tags')
+            if isinstance(tags, list):
+                answer += f"   Tags: {', '.join(tags)}\n"
+            else:
+                answer += f"   Tags: {tags}\n"
         answer += "\n"
     return answer
 

@@ -84,7 +84,7 @@ class CrossEncoderRerankerClient:
         query: str,
         candidates: Sequence[VectorResult],
         *,
-        top_n: int = 1,
+        top_n: int = 3,
         include_debug: bool = False,
     ) -> tuple[List[RerankedVectorResult], RerankDebugInfo | None]:
         """

@@ -31,20 +31,20 @@
       "count": 2.0
     },
     "vectordb": {
-      "avg_semantic_similarity": 0.5073052942752838,
-      "avg_f1_score": 0.22767857142857142,
-      "avg_precision": 0.41666666666666663,
-      "avg_recall": 0.18872549019607843,
-      "avg_hallucination_rate": 0.0,
-      "avg_faithfulness": 1.0,
+      "avg_semantic_similarity": 0.24095508456230164,
+      "avg_f1_score": 0.14835164835164832,
+      "avg_precision": 0.3611111111111111,
+      "avg_recall": 0.10049019607843138,
+      "avg_hallucination_rate": 0.5,
+      "avg_faithfulness": 0.5,
       "avg_total_claims": 1.0,
-      "avg_grounded_claims": 1.0,
-      "avg_ungrounded_claims": 0.0,
+      "avg_grounded_claims": 0.5,
+      "avg_ungrounded_claims": 0.5,
       "count": 2.0,
       "improvement_over_none_percent": {
-        "semantic_similarity": 14042.296087663852,
-        "f1_score": 195.98214285714292,
-        "hallucination_rate": 100.0,
+        "semantic_similarity": 6722.18031371995,
+        "f1_score": 92.85714285714285,
+        "hallucination_rate": 50.0,
         "faithfulness": null
       }
     },
@@ -67,20 +67,20 @@
       }
     },
     "hybrid": {
-      "avg_semantic_similarity": 0.4345503896474838,
-      "avg_f1_score": 0.11145510835913312,
-      "avg_precision": 0.35,
+      "avg_semantic_similarity": 0.43299010396003723,
+      "avg_f1_score": 0.12406015037593984,
+      "avg_precision": 0.5,
       "avg_recall": 0.07107843137254902,
-      "avg_hallucination_rate": 0.25,
-      "avg_faithfulness": 0.75,
-      "avg_total_claims": 1.5,
+      "avg_hallucination_rate": 0.0,
+      "avg_faithfulness": 1.0,
+      "avg_total_claims": 1.0,
       "avg_grounded_claims": 1.0,
-      "avg_ungrounded_claims": 0.5,
+      "avg_ungrounded_claims": 0.0,
       "count": 2.0,
       "improvement_over_none_percent": {
-        "semantic_similarity": 12042.769503578775,
-        "f1_score": 44.891640866873075,
-        "hallucination_rate": 75.0,
+        "semantic_similarity": 11999.888096108345,
+        "f1_score": 61.27819548872182,
+        "hallucination_rate": 100.0,
         "faithfulness": null
       }
     }
@@ -150,25 +150,25 @@
           }
         },
         "hybrid": {
-          "answer": "1. Thannirbavi Tree Park Beach",
+          "answer": "Uchila Beach",
           "retrieved_context": [
             "Uchila Beach is a quiet coastal destination located between Mangalore and Udupi with scenic shoreline.",
-            "Thannirbavi Tree Park Beach --LOCATED_IN--> Mangalore"
+            "Ullal Beach --has_category--> Beach"
           ],
           "retrieved_context_count": 2,
-          "semantic_similarity": 0.4526500403881073,
-          "f1_score": 0.11764705882352941,
-          "precision": 0.2,
+          "semantic_similarity": 0.4495294690132141,
+          "f1_score": 0.14285714285714285,
+          "precision": 0.5,
           "recall": 0.08333333333333333,
-          "hallucination_rate": 0.5,
-          "faithfulness": 0.5,
-          "total_claims": 2,
+          "hallucination_rate": 0.0,
+          "faithfulness": 1.0,
+          "total_claims": 1,
           "grounded_claims": 1,
-          "ungrounded_claims": 1,
+          "ungrounded_claims": 0,
           "improvement_over_none_percent": {
-            "semantic_similarity": 1241.3864332554606,
+            "semantic_similarity": 1233.5177101504003,
             "f1_score": null,
-            "hallucination_rate": 50.0,
+            "hallucination_rate": 100.0,
             "faithfulness": null
           }
         }
@@ -194,31 +194,31 @@
           "improvement_over_none_percent": null
         },
         "vectordb": {
-          "answer": "Temple street in Udupi is a bustling market selling souvenirs, traditional clothes and religious items.",
+          "answer": "The answer is not available in the provided context.",
           "retrieved_context": [
-            "Temple street in Udupi is a bustling market selling souvenirs, traditional clothes and religious items."
+            "Hotel Mitra Samaj is a legendary vegetarian restaurant known for dosa and traditional Udupi meals."
           ],
           "retrieved_context_count": 1,
-          "semantic_similarity": 0.5650811195373535,
-          "f1_score": 0.3125,
-          "precision": 0.3333333333333333,
-          "recall": 0.29411764705882354,
-          "hallucination_rate": 0.0,
-          "faithfulness": 1.0,
+          "semantic_similarity": 0.03238070011138916,
+          "f1_score": 0.15384615384615383,
+          "precision": 0.2222222222222222,
+          "recall": 0.11764705882352941,
+          "hallucination_rate": 1.0,
+          "faithfulness": 0.0,
           "total_claims": 1,
-          "grounded_claims": 1,
-          "ungrounded_claims": 0,
+          "grounded_claims": 0,
+          "ungrounded_claims": 1,
           "improvement_over_none_percent": {
-            "semantic_similarity": 1645.1170530392556,
-            "f1_score": 103.12500000000003,
-            "hallucination_rate": 100.0,
+            "semantic_similarity": 0.0,
+            "f1_score": 0.0,
+            "hallucination_rate": 0.0,
             "faithfulness": null
           }
         },
         "kg": {
           "answer": "Chandramouleshwara Temple",
           "retrieved_context": [
-            "Chandramouleshwara Temple --LOCATED_IN--> Udupi"
+            "Chandramouleshwara Temple --Temple--> Udupi"
           ],
           "retrieved_context_count": 1,
           "semantic_similarity": 0.41645073890686035,

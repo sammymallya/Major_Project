@@ -1,0 +1,1019 @@
+[
+{
+"id":"tourism_001",
+"name":"Malpe Beach",
+"category":"Beach",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Malpe Beach is one of the most popular beaches near Udupi known for golden sand, sunset views, water sports and ferry rides to St Mary's Island.",
+"tags":["beach","sunset","water sports","coastal karnataka"]
+},
+{
+"id":"tourism_002",
+"name":"Kapu Beach",
+"category":"Beach",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Kapu Beach is famous for its lighthouse that offers panoramic views of the Arabian Sea and is a popular spot for sunset photography.",
+"tags":["beach","lighthouse","sunset"]
+},
+{
+"id":"tourism_003",
+"name":"Padubidri Blue Flag Beach",
+"category":"Beach",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Padubidri Beach is a certified Blue Flag beach known for cleanliness, sustainable tourism infrastructure and scenic coastal views.",
+"tags":["beach","blue flag","eco tourism"]
+},
+{
+"id":"tourism_004",
+"name":"Panambur Beach",
+"category":"Beach",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Panambur Beach is one of the cleanest beaches in India known for water sports, jet skiing, camel rides and vibrant sunset views.",
+"tags":["beach","water sports"]
+},
+{
+"id":"tourism_005",
+"name":"Tannirbhavi Beach",
+"category":"Beach",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Tannirbhavi Beach is a peaceful beach located across the Gurupura river known for long sandy shores and scenic sunset views.",
+"tags":["beach","nature"]
+},
+{
+"id":"tourism_006",
+"name":"Someshwara Beach",
+"category":"Beach",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Someshwara Beach is known for large rock formations called Rudra Shile and is located near the Someshwara temple.",
+"tags":["beach","rock formations"]
+},
+{
+"id":"tourism_007",
+"name":"Ullal Beach",
+"category":"Beach",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Ullal Beach is a quiet beach near Mangalore known for calm waters, coconut trees and beautiful sunsets.",
+"tags":["beach","nature"]
+},
+{
+"id":"tourism_008",
+"name":"Kodi Bengre Beach",
+"category":"Beach",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Kodi Bengre Beach is located near the Kodi river mouth and is known for scenic views where the river meets the Arabian Sea.",
+"tags":["beach","nature"]
+},
+{
+"id":"tourism_009",
+"name":"Maravanthe Beach",
+"category":"Beach",
+"city":"Kundapura",
+"state":"Karnataka",
+"text":"Maravanthe Beach is famous for a highway that runs between the Arabian Sea and the Souparnika river creating a unique landscape.",
+"tags":["beach","scenic drive"]
+},
+{
+"id":"tourism_010",
+"name":"Mattu Beach",
+"category":"Beach",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Mattu Beach is a quiet coastal destination known for peaceful surroundings and scenic coastal views.",
+"tags":["beach","nature"]
+},
+{
+"id":"tourism_011",
+"name":"Udupi Sri Krishna Temple",
+"category":"Temple",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Udupi Sri Krishna Temple is a famous Hindu temple dedicated to Lord Krishna founded by Madhvacharya in the 13th century.",
+"tags":["temple","pilgrimage","krishna"]
+},
+{
+"id":"tourism_012",
+"name":"Kadri Manjunath Temple",
+"category":"Temple",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Kadri Manjunath Temple is an ancient temple dedicated to Lord Manjunatha known for bronze statues and sacred ponds.",
+"tags":["temple","heritage"]
+},
+{
+"id":"tourism_013",
+"name":"Kudroli Gokarnath Temple",
+"category":"Temple",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Kudroli Gokarnath Temple is a major temple in Mangalore famous for colorful architecture and grand Dasara celebrations.",
+"tags":["temple","festival"]
+},
+{
+"id":"tourism_014",
+"name":"Mangaladevi Temple",
+"category":"Temple",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Mangaladevi Temple is one of the oldest temples in Mangalore dedicated to Goddess Mangaladevi after whom the city is named.",
+"tags":["temple","history"]
+},
+{
+"id":"tourism_015",
+"name":"Anegudde Vinayaka Temple",
+"category":"Temple",
+"city":"Kumbashi",
+"state":"Karnataka",
+"text":"Anegudde Vinayaka Temple is a famous temple dedicated to Lord Ganesha located near Kundapura.",
+"tags":["temple","ganesha"]
+},
+{
+"id":"tourism_016",
+"name":"Kollur Mookambika Temple",
+"category":"Temple",
+"city":"Kollur",
+"state":"Karnataka",
+"text":"Kollur Mookambika Temple is one of the most important Shakti temples in Karnataka located near the Western Ghats.",
+"tags":["temple","pilgrimage"]
+},
+{
+"id":"tourism_017",
+"name":"Durga Parameshwari Temple",
+"category":"Temple",
+"city":"Mulki",
+"state":"Karnataka",
+"text":"Durga Parameshwari Temple in Kateel is dedicated to Goddess Durga and located on an island in the Nandini river.",
+"tags":["temple","pilgrimage"]
+},
+{
+"id":"tourism_018",
+"name":"Anantheshwara Temple",
+"category":"Temple",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Anantheshwara Temple is an ancient temple dedicated to Lord Shiva located near the Krishna Temple in Udupi.",
+"tags":["temple","heritage"]
+},
+{
+"id":"tourism_019",
+"name":"St Marys Island",
+"category":"Island",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"St Mary's Island is famous for unique hexagonal basalt rock formations and is accessible by ferry from Malpe Beach.",
+"tags":["island","geology"]
+},
+{
+"id":"tourism_020",
+"name":"Sultan Battery",
+"category":"Heritage",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Sultan Battery is a watchtower built by Tipu Sultan used to guard the Gurupura river from invading ships.",
+"tags":["heritage","history"]
+},
+{
+"id":"tourism_021",
+"name":"St Aloysius Chapel",
+"category":"Heritage",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"St Aloysius Chapel is famous for its beautiful fresco paintings covering the ceilings and walls.",
+"tags":["heritage","church"]
+},
+{
+"id":"tourism_022",
+"name":"Sammilan Shetty Butterfly Park",
+"category":"Nature",
+"city":"Belvai",
+"state":"Karnataka",
+"text":"Sammilan Shetty Butterfly Park is a natural park known for diverse butterfly species and lush greenery.",
+"tags":["nature","wildlife"]
+},
+{
+"id":"tourism_023",
+"name":"Kudlu Falls",
+"category":"Nature",
+"city":"Western Ghats",
+"state":"Karnataka",
+"text":"Kudlu Falls is a scenic waterfall located inside the Western Ghats accessible via trekking trails.",
+"tags":["waterfall","trekking"]
+},
+{
+"id":"tourism_024",
+"name":"Forum Fiza Mall",
+"category":"Mall",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Forum Fiza Mall is a large shopping mall in Mangalore featuring retail stores, restaurants and multiplex cinema.",
+"tags":["shopping","mall"]
+},
+{
+"id":"tourism_025",
+"name":"City Centre Mall",
+"category":"Mall",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"City Centre Mall is one of the largest malls in Mangalore offering shopping, dining and entertainment options.",
+"tags":["shopping","mall"]
+},
+{
+"id":"tourism_026",
+"name":"Bharath Mall",
+"category":"Mall",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Bharath Mall is a popular shopping mall in Mangalore known for retail stores, food courts and multiplex cinema.",
+"tags":["shopping","mall","entertainment"]
+},
+{
+"id":"tourism_027",
+"name":"Ocean Pearl Hotel",
+"category":"Hotel",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"The Ocean Pearl is a luxury hotel in Mangalore offering premium accommodation, fine dining and conference facilities.",
+"tags":["hotel","luxury","stay"]
+},
+{
+"id":"tourism_028",
+"name":"Hotel Janardana",
+"category":"Hotel",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Hotel Janardana is a well known hotel in Udupi offering comfortable rooms and traditional Udupi cuisine.",
+"tags":["hotel","stay","udupi cuisine"]
+},
+{
+"id":"tourism_029",
+"name":"Paradise Isle Beach Resort",
+"category":"Resort",
+"city":"Malpe",
+"state":"Karnataka",
+"text":"Paradise Isle Beach Resort is a beachfront resort near Malpe Beach known for scenic views and relaxing coastal stay.",
+"tags":["resort","beach stay"]
+},
+{
+"id":"tourism_030",
+"name":"Summer Sands Beach Resort",
+"category":"Resort",
+"city":"Ullal",
+"state":"Karnataka",
+"text":"Summer Sands Beach Resort is located near Ullal Beach offering beachfront villas and coastal cuisine.",
+"tags":["resort","beach"]
+},
+{
+"id":"tourism_031",
+"name":"Machali Restaurant",
+"category":"Restaurant",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Machali Restaurant is famous for authentic Mangalorean seafood including fish curry, prawn dishes and traditional coastal cuisine.",
+"tags":["restaurant","seafood"]
+},
+{
+"id":"tourism_032",
+"name":"Gajalee Seafood Restaurant",
+"category":"Restaurant",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Gajalee is a well known seafood restaurant serving fresh fish dishes and coastal delicacies.",
+"tags":["restaurant","seafood"]
+},
+{
+"id":"tourism_033",
+"name":"Hotel Diana Restaurant",
+"category":"Restaurant",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Hotel Diana is a famous restaurant in Udupi serving seafood and South Indian cuisine.",
+"tags":["restaurant","seafood"]
+},
+{
+"id":"tourism_034",
+"name":"Woodlands Restaurant",
+"category":"Restaurant",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Woodlands Restaurant is known for traditional Udupi vegetarian cuisine including dosa, idli and thali meals.",
+"tags":["restaurant","vegetarian"]
+},
+{
+"id":"tourism_035",
+"name":"MTR Udupi",
+"category":"Restaurant",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"MTR Udupi is known for authentic South Indian meals including dosa, idli, vada and filter coffee.",
+"tags":["restaurant","south indian"]
+},
+{
+"id":"tourism_036",
+"name":"Pallkhi Restaurant",
+"category":"Restaurant",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Pallkhi Restaurant serves North Indian and Mughlai cuisine in Mangalore with elegant dining ambience.",
+"tags":["restaurant","north indian"]
+},
+{
+"id":"tourism_037",
+"name":"Ideal Ice Cream Parlour",
+"category":"Restaurant",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Ideal Ice Cream is famous in Mangalore for unique ice cream flavors like Gadbad and Pabba specials.",
+"tags":["dessert","ice cream"]
+},
+{
+"id":"tourism_038",
+"name":"Sagar Ratna Restaurant",
+"category":"Restaurant",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Sagar Ratna is known for South Indian vegetarian dishes including dosa varieties and traditional meals.",
+"tags":["restaurant","vegetarian"]
+},
+{
+"id":"tourism_039",
+"name":"New Taj Mahal Cafe",
+"category":"Restaurant",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"New Taj Mahal Cafe is one of the oldest restaurants in Mangalore serving South Indian breakfast and snacks.",
+"tags":["restaurant","south indian"]
+},
+{
+"id":"tourism_040",
+"name":"Sai Palace Hotel",
+"category":"Hotel",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Sai Palace Hotel offers comfortable accommodation and business facilities in Mangalore city.",
+"tags":["hotel","stay"]
+},
+{
+"id":"tourism_041",
+"name":"River Roost Resort",
+"category":"Resort",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"River Roost Resort is a riverside eco resort near Udupi known for kayaking and nature stays.",
+"tags":["resort","eco tourism"]
+},
+{
+"id":"tourism_042",
+"name":"Malpe Sea Walk",
+"category":"Attraction",
+"city":"Malpe",
+"state":"Karnataka",
+"text":"Malpe Sea Walk is a unique walkway extending into the sea allowing visitors to walk over the Arabian Sea.",
+"tags":["attraction","sea walk"]
+},
+{
+"id":"tourism_043",
+"name":"Kapu Lighthouse",
+"category":"Attraction",
+"city":"Kapu",
+"state":"Karnataka",
+"text":"Kapu Lighthouse is a historic lighthouse offering panoramic coastal views after climbing the tower.",
+"tags":["lighthouse","tourism"]
+},
+{
+"id":"tourism_044",
+"name":"Bejai Museum",
+"category":"Museum",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Bejai Museum is the only museum in Mangalore showcasing historical artifacts and cultural exhibits.",
+"tags":["museum","heritage"]
+},
+{
+"id":"tourism_045",
+"name":"Pilakula Nisargadhama",
+"category":"Nature Park",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Pilakula Nisargadhama is a large eco tourism park featuring a zoo, botanical garden and heritage village.",
+"tags":["nature","eco tourism"]
+},
+{
+"id":"tourism_046",
+"name":"Pilikula Zoo",
+"category":"Zoo",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Pilikula Zoo is a biological park housing various wildlife species native to the Western Ghats.",
+"tags":["zoo","wildlife"]
+},
+{
+"id":"tourism_047",
+"name":"Kadri Park",
+"category":"Park",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Kadri Park is one of the largest parks in Mangalore offering gardens, fountains and recreational spaces.",
+"tags":["park","nature"]
+},
+{
+"id":"tourism_048",
+"name":"Udupi Anantheshwara Temple Street Market",
+"category":"Market",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"The temple street market near Udupi Krishna Temple sells souvenirs, religious items and local snacks.",
+"tags":["market","shopping"]
+},
+{
+"id":"tourism_049",
+"name":"Malpe Fishing Harbor",
+"category":"Attraction",
+"city":"Malpe",
+"state":"Karnataka",
+"text":"Malpe Fishing Harbor is one of the largest fishing harbors in Karnataka where visitors can see traditional fishing boats.",
+"tags":["harbor","tourism"]
+},
+{
+"id":"tourism_050",
+"name":"Ullal Dargah",
+"category":"Heritage",
+"city":"Ullal",
+"state":"Karnataka",
+"text":"Ullal Dargah is a historic Islamic shrine visited by pilgrims and tourists in the coastal region.",
+"tags":["heritage","religious"]
+},
+{
+"id":"tourism_051",
+"name":"Karkala Gomateshwara Statue",
+"category":"Heritage",
+"city":"Karkala",
+"state":"Karnataka",
+"text":"The Gomateshwara statue in Karkala is a 42 foot monolithic statue of Lord Bahubali standing on a hill and is an important Jain pilgrimage site.",
+"tags":["heritage","jain","monument"]
+},
+{
+"id":"tourism_052",
+"name":"Moodabidri Thousand Pillar Temple",
+"category":"Temple",
+"city":"Moodabidri",
+"state":"Karnataka",
+"text":"The Thousand Pillar Temple in Moodabidri is a historic Jain temple known for its intricately carved stone pillars and architecture.",
+"tags":["temple","jain","heritage"]
+},
+{
+"id":"tourism_053",
+"name":"Kudremukh National Park",
+"category":"Nature",
+"city":"Kudremukh",
+"state":"Karnataka",
+"text":"Kudremukh National Park is a biodiversity hotspot in the Western Ghats known for trekking trails, wildlife and lush green hills.",
+"tags":["national park","trekking","nature"]
+},
+{
+"id":"tourism_054",
+"name":"Hanuman Gundi Falls",
+"category":"Waterfall",
+"city":"Kudremukh",
+"state":"Karnataka",
+"text":"Hanuman Gundi Falls is a scenic waterfall located in Kudremukh National Park surrounded by dense forests.",
+"tags":["waterfall","nature"]
+},
+{
+"id":"tourism_055",
+"name":"Belkal Theertha Falls",
+"category":"Waterfall",
+"city":"Kollur",
+"state":"Karnataka",
+"text":"Belkal Theertha Falls is a hidden waterfall in the Western Ghats reachable through trekking trails.",
+"tags":["waterfall","trekking"]
+},
+{
+"id":"tourism_056",
+"name":"Kodi Beach",
+"category":"Beach",
+"city":"Kundapura",
+"state":"Karnataka",
+"text":"Kodi Beach near Kundapura is known for its calm waters and scenic coastal views where the river meets the sea.",
+"tags":["beach","nature"]
+},
+{
+"id":"tourism_057",
+"name":"Trasi Beach",
+"category":"Beach",
+"city":"Kundapura",
+"state":"Karnataka",
+"text":"Trasi Beach is a quiet beach destination known for its untouched shoreline and beautiful sunset views.",
+"tags":["beach","sunset"]
+},
+{
+"id":"tourism_058",
+"name":"Ottinene Beach",
+"category":"Beach",
+"city":"Kundapura",
+"state":"Karnataka",
+"text":"Ottinene Beach offers scenic views from a cliff overlooking the Arabian Sea and dense greenery.",
+"tags":["beach","scenic"]
+},
+{
+"id":"tourism_059",
+"name":"Kundapura Beach",
+"category":"Beach",
+"city":"Kundapura",
+"state":"Karnataka",
+"text":"Kundapura Beach is a peaceful coastal spot known for wide sandy shores and fishing villages.",
+"tags":["beach","nature"]
+},
+{
+"id":"tourism_060",
+"name":"Barkur Fort",
+"category":"Heritage",
+"city":"Barkur",
+"state":"Karnataka",
+"text":"Barkur Fort is a historical fort dating back to the Vijayanagara period and is surrounded by ancient temples.",
+"tags":["fort","heritage"]
+},
+{
+"id":"tourism_061",
+"name":"Barkur Temples Complex",
+"category":"Heritage",
+"city":"Barkur",
+"state":"Karnataka",
+"text":"Barkur is known for its ancient temple complexes built during the Alupa and Vijayanagara dynasties.",
+"tags":["heritage","temple"]
+},
+{
+"id":"tourism_062",
+"name":"Udyavara River Bridge Viewpoint",
+"category":"Attraction",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"The Udyavara bridge area offers scenic views of the river meeting the Arabian Sea and is a popular photography spot.",
+"tags":["viewpoint","nature"]
+},
+{
+"id":"tourism_063",
+"name":"Malpe Port",
+"category":"Attraction",
+"city":"Malpe",
+"state":"Karnataka",
+"text":"Malpe Port is an important fishing and trading port where visitors can observe fishing boats and coastal activities.",
+"tags":["port","tourism"]
+},
+{
+"id":"tourism_064",
+"name":"Delta Beach",
+"category":"Beach",
+"city":"Kodi",
+"state":"Karnataka",
+"text":"Delta Beach is a scenic location where the river delta meets the Arabian Sea creating a picturesque landscape.",
+"tags":["beach","delta"]
+},
+{
+"id":"tourism_065",
+"name":"NITK Beach",
+"category":"Beach",
+"city":"Surathkal",
+"state":"Karnataka",
+"text":"NITK Beach near Surathkal is known for its lighthouse and scenic coastal surroundings.",
+"tags":["beach","lighthouse"]
+},
+{
+"id":"tourism_066",
+"name":"Surathkal Lighthouse",
+"category":"Attraction",
+"city":"Surathkal",
+"state":"Karnataka",
+"text":"Surathkal Lighthouse offers panoramic views of the Arabian Sea and nearby beaches.",
+"tags":["lighthouse","viewpoint"]
+},
+{
+"id":"tourism_067",
+"name":"Someshwara Temple",
+"category":"Temple",
+"city":"Someshwara",
+"state":"Karnataka",
+"text":"Someshwara Temple is a historic Shiva temple located near Someshwara Beach in Mangalore.",
+"tags":["temple","shiva"]
+},
+{
+"id":"tourism_068",
+"name":"Kateel Durga Parameshwari Temple",
+"category":"Temple",
+"city":"Kateel",
+"state":"Karnataka",
+"text":"Kateel Temple dedicated to Goddess Durga is located on an island in the Nandini river and attracts many devotees.",
+"tags":["temple","pilgrimage"]
+},
+{
+"id":"tourism_069",
+"name":"Polali Rajarajeshwari Temple",
+"category":"Temple",
+"city":"Polali",
+"state":"Karnataka",
+"text":"Polali Rajarajeshwari Temple is famous for its unique clay idol of the goddess and annual festivals.",
+"tags":["temple","festival"]
+},
+{
+"id":"tourism_070",
+"name":"Dharmasthala Temple",
+"category":"Temple",
+"city":"Dharmasthala",
+"state":"Karnataka",
+"text":"Dharmasthala Temple is a major pilgrimage center dedicated to Lord Manjunatha known for charity and religious harmony.",
+"tags":["temple","pilgrimage"]
+},
+{
+"id":"tourism_071",
+"name":"Manjusha Museum",
+"category":"Museum",
+"city":"Dharmasthala",
+"state":"Karnataka",
+"text":"Manjusha Museum displays antique artifacts, paintings and vintage items related to Indian culture and history.",
+"tags":["museum","heritage"]
+},
+{
+"id":"tourism_072",
+"name":"Bahubali Statue Dharmasthala",
+"category":"Monument",
+"city":"Dharmasthala",
+"state":"Karnataka",
+"text":"The Bahubali statue in Dharmasthala is a large monolithic statue dedicated to the Jain saint Bahubali.",
+"tags":["monument","jain"]
+},
+{
+"id":"tourism_073",
+"name":"Malpe Sea Food Market",
+"category":"Market",
+"city":"Malpe",
+"state":"Karnataka",
+"text":"The seafood market at Malpe offers fresh fish and local seafood varieties caught by fishermen daily.",
+"tags":["market","seafood"]
+},
+{
+"id":"tourism_074",
+"name":"Central Market Mangalore",
+"category":"Market",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Central Market in Mangalore is a bustling local market selling vegetables, spices, seafood and household goods.",
+"tags":["market","shopping"]
+},
+{
+"id":"tourism_075",
+"name":"Forum Mall Food Court",
+"category":"Restaurant",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"The food court at Forum Fiza Mall offers a wide variety of cuisines including Indian, Chinese and fast food.",
+"tags":["restaurant","food court"]
+},
+{
+"id":"tourism_076",
+"name":"Diesel Cafe",
+"category":"Restaurant",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Diesel Cafe is a trendy cafe known for coffee, snacks and modern ambience popular among young visitors.",
+"tags":["cafe","coffee"]
+},
+{
+"id":"tourism_077",
+"name":"Brick House Cafe",
+"category":"Restaurant",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Brick House Cafe offers international cuisine, desserts and coffee in a stylish setting.",
+"tags":["cafe","restaurant"]
+},
+{
+"id":"tourism_078",
+"name":"Shetty Lunch Home",
+"category":"Restaurant",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Shetty Lunch Home is known for authentic Mangalorean seafood including fish fry and prawn curry.",
+"tags":["restaurant","seafood"]
+},
+{
+"id":"tourism_079",
+"name":"Hotel Narayana",
+"category":"Restaurant",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Hotel Narayana is famous for fish meals and coastal Karnataka seafood cuisine.",
+"tags":["restaurant","seafood"]
+},
+{
+"id":"tourism_080",
+"name":"Hotel Mitra Samaj",
+"category":"Restaurant",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Hotel Mitra Samaj is a legendary vegetarian restaurant known for dosa and traditional Udupi meals.",
+"tags":["restaurant","vegetarian"]
+},
+{
+"id":"tourism_081",
+"name":"Manipal End Point",
+"category":"Viewpoint",
+"city":"Manipal",
+"state":"Karnataka",
+"text":"End Point in Manipal offers panoramic views of the Swarna river valley and surrounding hills.",
+"tags":["viewpoint","nature"]
+},
+{
+"id":"tourism_082",
+"name":"Arbi Falls",
+"category":"Waterfall",
+"city":"Manipal",
+"state":"Karnataka",
+"text":"Arbi Falls is a small seasonal waterfall near Manipal popular among students and tourists.",
+"tags":["waterfall","nature"]
+},
+{
+"id":"tourism_083",
+"name":"Hasta Shilpa Heritage Village",
+"category":"Museum",
+"city":"Manipal",
+"state":"Karnataka",
+"text":"Hasta Shilpa Heritage Village showcases traditional houses relocated from different parts of Karnataka.",
+"tags":["museum","heritage"]
+},
+{
+"id":"tourism_084",
+"name":"Manipal Lake",
+"category":"Nature",
+"city":"Manipal",
+"state":"Karnataka",
+"text":"Manipal Lake is a scenic artificial lake offering boating and walking trails.",
+"tags":["lake","nature"]
+},
+{
+"id":"tourism_085",
+"name":"Delta Beach Kodi Bengre",
+"category":"Beach",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Delta Beach Kodi Bengre is a scenic coastal stretch where the river meets the Arabian Sea.",
+"tags":["beach","nature"]
+},
+{
+"id":"tourism_086",
+"name":"Hoode Beach",
+"category":"Beach",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Hoode Beach is a quiet beach known for fishing boats and peaceful surroundings.",
+"tags":["beach","nature"]
+},
+{
+"id":"tourism_087",
+"name":"Kemmannu Beach",
+"category":"Beach",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Kemmannu Beach offers scenic views and is less crowded compared to other beaches in the region.",
+"tags":["beach","nature"]
+},
+{
+"id":"tourism_088",
+"name":"Bada Yermal Temple",
+"category":"Temple",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Bada Yermal Temple dedicated to Durga Parameshwari is an important temple in the Udupi district.",
+"tags":["temple","pilgrimage"]
+},
+{
+"id":"tourism_089",
+"name":"Chandramouleshwara Temple",
+"category":"Temple",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Chandramouleshwara Temple is an ancient Shiva temple located near Udupi Krishna Temple.",
+"tags":["temple","shiva"]
+},
+{
+"id":"tourism_090",
+"name":"Manipal Museum of Anatomy",
+"category":"Museum",
+"city":"Manipal",
+"state":"Karnataka",
+"text":"The Anatomy Museum in Manipal displays preserved specimens and medical educational exhibits.",
+"tags":["museum","education"]
+},
+{
+"id":"tourism_091",
+"name":"Dr TMA Pai Planetarium",
+"category":"Attraction",
+"city":"Manipal",
+"state":"Karnataka",
+"text":"Dr TMA Pai Planetarium offers astronomy shows and educational exhibits related to space science.",
+"tags":["planetarium","education"]
+},
+{
+"id":"tourism_092",
+"name":"Malpe Water Sports",
+"category":"Activity",
+"city":"Malpe",
+"state":"Karnataka",
+"text":"Malpe Beach offers water sports such as jet skiing, parasailing and banana boat rides.",
+"tags":["water sports","activity"]
+},
+{
+"id":"tourism_093",
+"name":"Panambur Water Sports",
+"category":"Activity",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Panambur Beach offers activities like parasailing, speed boating and beach sports.",
+"tags":["water sports"]
+},
+{
+"id":"tourism_094",
+"name":"St Mary's Island Boat Ride",
+"category":"Activity",
+"city":"Malpe",
+"state":"Karnataka",
+"text":"Boat rides from Malpe Beach take tourists to St Mary's Island known for basalt rock formations.",
+"tags":["boat ride","tourism"]
+},
+{
+"id":"tourism_095",
+"name":"Malpe Dolphin Watching",
+"category":"Activity",
+"city":"Malpe",
+"state":"Karnataka",
+"text":"Boat trips from Malpe sometimes allow visitors to spot dolphins in the Arabian Sea.",
+"tags":["dolphin","activity"]
+},
+{
+"id":"tourism_096",
+"name":"Udupi Temple Car Festival",
+"category":"Festival",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"The Udupi temple car festival is an important annual religious event attracting thousands of devotees.",
+"tags":["festival","temple"]
+},
+{
+"id":"tourism_097",
+"name":"Mangalore Dasara Festival",
+"category":"Festival",
+"city":"Mangalore",
+"state":"Karnataka",
+"text":"Mangalore Dasara is a grand festival celebrated at Kudroli Temple featuring processions and cultural events.",
+"tags":["festival","culture"]
+},
+{
+"id":"tourism_098",
+"name":"Kambala Buffalo Race",
+"category":"Festival",
+"city":"Coastal Karnataka",
+"state":"Karnataka",
+"text":"Kambala is a traditional buffalo race held in paddy fields across coastal Karnataka.",
+"tags":["festival","culture"]
+},
+{
+"id":"tourism_099",
+"name":"Yakshagana Performance",
+"category":"Culture",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Yakshagana is a traditional dance drama performance popular in coastal Karnataka.",
+"tags":["culture","dance"]
+},
+{
+"id":"tourism_100",
+"name":"Udupi Cuisine Experience",
+"category":"Food",
+"city":"Udupi",
+"state":"Karnataka",
+"text":"Udupi cuisine is famous for vegetarian dishes such as dosa, sambar and traditional South Indian meals.",
+"tags":["food","cuisine"]
+},
+{"id":"tourism_101","name":"Malpe Beach Sunset Point","category":"Viewpoint","city":"Malpe","state":"Karnataka","text":"Malpe Beach sunset point is a popular evening destination where visitors gather to watch the Arabian Sea sunset.","tags":["viewpoint","sunset"]},
+{"id":"tourism_102","name":"Udupi Temple Street","category":"Market","city":"Udupi","state":"Karnataka","text":"Temple street in Udupi is a bustling market selling souvenirs, traditional clothes and religious items.","tags":["market","shopping"]},
+{"id":"tourism_103","name":"Manipal Tiger Circle","category":"Attraction","city":"Manipal","state":"Karnataka","text":"Tiger Circle is a well known landmark in Manipal surrounded by cafes, restaurants and student hangouts.","tags":["landmark","student area"]},
+{"id":"tourism_104","name":"Malpe Lighthouse Viewpoint","category":"Viewpoint","city":"Malpe","state":"Karnataka","text":"The Malpe lighthouse area provides panoramic views of the sea and fishing harbor.","tags":["viewpoint","lighthouse"]},
+{"id":"tourism_105","name":"Uchila Beach","category":"Beach","city":"Uchila","state":"Karnataka","text":"Uchila Beach is a quiet coastal destination located between Mangalore and Udupi with scenic shoreline.","tags":["beach","nature"]},
+{"id":"tourism_106","name":"Hejamadi Beach","category":"Beach","city":"Hejamadi","state":"Karnataka","text":"Hejamadi Beach is known for clean sand and scenic estuary views near the Nandini river.","tags":["beach","nature"]},
+{"id":"tourism_107","name":"Mulki Beach","category":"Beach","city":"Mulki","state":"Karnataka","text":"Mulki Beach is a popular surfing destination attracting international surfers.","tags":["beach","surfing"]},
+{"id":"tourism_108","name":"Mulki Surfing School","category":"Activity","city":"Mulki","state":"Karnataka","text":"Mulki surfing schools offer surfing lessons and water sports activities on the Arabian Sea coast.","tags":["surfing","activity"]},
+{"id":"tourism_109","name":"Delta Point Kodi","category":"Viewpoint","city":"Kodi","state":"Karnataka","text":"Delta Point in Kodi Bengre offers views where the river meets the Arabian Sea.","tags":["viewpoint","nature"]},
+{"id":"tourism_110","name":"Sasihithlu Beach","category":"Beach","city":"Mangalore","state":"Karnataka","text":"Sasihithlu Beach is famous for surfing competitions and scenic estuary landscapes.","tags":["beach","surfing"]},
+
+{"id":"tourism_111","name":"Mangala Stadium","category":"Attraction","city":"Mangalore","state":"Karnataka","text":"Mangala Stadium is a major sports stadium used for football and athletic events.","tags":["stadium","sports"]},
+{"id":"tourism_112","name":"Pilikula Lake","category":"Nature","city":"Mangalore","state":"Karnataka","text":"Pilikula Lake offers boating activities inside the Pilikula Nisargadhama eco park.","tags":["lake","boating"]},
+{"id":"tourism_113","name":"Moodabidri Jain Basadis","category":"Heritage","city":"Moodabidri","state":"Karnataka","text":"Moodabidri is known for its ancient Jain basadis with intricate carvings and architecture.","tags":["heritage","jain"]},
+{"id":"tourism_114","name":"Karkala Chaturmukha Basadi","category":"Temple","city":"Karkala","state":"Karnataka","text":"Chaturmukha Basadi in Karkala is a unique Jain temple with four entrances facing cardinal directions.","tags":["temple","jain"]},
+{"id":"tourism_115","name":"Agumbe Sunset Viewpoint","category":"Viewpoint","city":"Agumbe","state":"Karnataka","text":"Agumbe sunset viewpoint offers spectacular views over the Western Ghats and Arabian Sea horizon.","tags":["sunset","viewpoint"]},
+{"id":"tourism_116","name":"Agumbe Rainforest Research Station","category":"Nature","city":"Agumbe","state":"Karnataka","text":"Agumbe rainforest station studies biodiversity and king cobra conservation.","tags":["rainforest","wildlife"]},
+{"id":"tourism_117","name":"Jogigundi Falls","category":"Waterfall","city":"Agumbe","state":"Karnataka","text":"Jogigundi Falls is a scenic waterfall inside dense forest near Agumbe.","tags":["waterfall","nature"]},
+{"id":"tourism_118","name":"Barkana Falls","category":"Waterfall","city":"Agumbe","state":"Karnataka","text":"Barkana Falls is among the highest waterfalls in India located in the Western Ghats.","tags":["waterfall","trekking"]},
+{"id":"tourism_119","name":"Onake Abbi Falls","category":"Waterfall","city":"Agumbe","state":"Karnataka","text":"Onake Abbi Falls requires a forest trek and offers spectacular waterfall views.","tags":["waterfall","trekking"]},
+{"id":"tourism_120","name":"Kudremukh Peak Trek","category":"Trek","city":"Kudremukh","state":"Karnataka","text":"Kudremukh Peak Trek is one of the most famous trekking routes in the Western Ghats.","tags":["trek","adventure"]},
+
+{"id":"tourism_121","name":"Manipal Food Street","category":"Food","city":"Manipal","state":"Karnataka","text":"Manipal food street offers diverse street food and student friendly restaurants.","tags":["food","street food"]},
+{"id":"tourism_122","name":"Hangyo Ice Cream Factory","category":"Attraction","city":"Mangalore","state":"Karnataka","text":"Hangyo ice cream brand originated in Mangalore and is famous across Karnataka.","tags":["food","dessert"]},
+{"id":"tourism_123","name":"Mangalore Fish Market","category":"Market","city":"Mangalore","state":"Karnataka","text":"Mangalore fish market sells fresh seafood caught daily from Arabian Sea.","tags":["market","seafood"]},
+{"id":"tourism_124","name":"Kankanady Market","category":"Market","city":"Mangalore","state":"Karnataka","text":"Kankanady market is a busy shopping area with local goods and food stalls.","tags":["market","shopping"]},
+{"id":"tourism_125","name":"Car Street Udupi","category":"Market","city":"Udupi","state":"Karnataka","text":"Car Street is a historic street surrounding the Krishna Temple filled with shops and eateries.","tags":["market","tourism"]},
+
+{"id":"tourism_126","name":"Malpe Scuba Diving","category":"Activity","city":"Malpe","state":"Karnataka","text":"Scuba diving near Malpe allows visitors to explore marine life around St Mary's Island.","tags":["scuba","activity"]},
+{"id":"tourism_127","name":"St Mary's Island Coconut Beach","category":"Beach","city":"Udupi","state":"Karnataka","text":"A quiet beach area on St Mary's Island surrounded by coconut trees and basalt rocks.","tags":["beach","island"]},
+{"id":"tourism_128","name":"Kodi Bengre Backwaters","category":"Nature","city":"Udupi","state":"Karnataka","text":"Kodi Bengre backwaters are popular for scenic boat rides.","tags":["backwater","nature"]},
+{"id":"tourism_129","name":"Udupi Mattu Gulla Farms","category":"Attraction","city":"Mattu","state":"Karnataka","text":"Mattu village is famous for Mattu Gulla brinjal farms used in temple cuisine.","tags":["agriculture","tourism"]},
+{"id":"tourism_130","name":"Kemmannu Hanging Bridge","category":"Attraction","city":"Kemmannu","state":"Karnataka","text":"Kemmannu hanging bridge connects small villages across river channels.","tags":["bridge","tourism"]},
+
+{"id":"tourism_131","name":"Someshwara Temple Cliff View","category":"Viewpoint","city":"Someshwara","state":"Karnataka","text":"Cliff viewpoint near Someshwara temple overlooking Arabian Sea.","tags":["viewpoint","cliff"]},
+{"id":"tourism_132","name":"Mangalore Port Area","category":"Attraction","city":"Mangalore","state":"Karnataka","text":"New Mangalore Port is an important harbor for shipping and trade.","tags":["port","tourism"]},
+{"id":"tourism_133","name":"Bajpe Airport Viewpoint","category":"Viewpoint","city":"Mangalore","state":"Karnataka","text":"Plane spotting area near Mangalore International Airport runway.","tags":["airport","viewpoint"]},
+{"id":"tourism_134","name":"Sultan Battery Ferry","category":"Activity","city":"Mangalore","state":"Karnataka","text":"Ferry services connect Sultan Battery to Tannirbhavi Beach.","tags":["ferry","activity"]},
+{"id":"tourism_135","name":"Kadri Hill Park","category":"Park","city":"Mangalore","state":"Karnataka","text":"Kadri Hill Park is a green recreational space popular with families.","tags":["park","nature"]},
+
+{"id":"tourism_136","name":"Karkala Hilltop View","category":"Viewpoint","city":"Karkala","state":"Karnataka","text":"Hilltop viewpoint near the Bahubali statue offering scenic landscape views.","tags":["viewpoint","nature"]},
+{"id":"tourism_137","name":"Moodabidri Lotus Tank","category":"Heritage","city":"Moodabidri","state":"Karnataka","text":"Lotus tank near Jain temples used for ritual purposes.","tags":["heritage","temple"]},
+{"id":"tourism_138","name":"Dharmasthala Annadanam Hall","category":"Attraction","city":"Dharmasthala","state":"Karnataka","text":"Dharmasthala temple provides free meals to thousands of devotees daily.","tags":["pilgrimage","service"]},
+{"id":"tourism_139","name":"Netravati River Bridge","category":"Viewpoint","city":"Mangalore","state":"Karnataka","text":"The bridge offers scenic views of Netravati river and coastal plains.","tags":["river","viewpoint"]},
+{"id":"tourism_140","name":"Udupi Swarna River Walk","category":"Nature","city":"Udupi","state":"Karnataka","text":"Walking trail along Swarna river banks near Udupi town.","tags":["nature","walk"]},
+
+{"id":"tourism_141","name":"Manipal Museum of Art","category":"Museum","city":"Manipal","state":"Karnataka","text":"Museum displaying Indian art and cultural artifacts.","tags":["museum","art"]},
+{"id":"tourism_142","name":"Udupi Rathotsava Festival","category":"Festival","city":"Udupi","state":"Karnataka","text":"Annual temple chariot festival attracting thousands of devotees.","tags":["festival","temple"]},
+{"id":"tourism_143","name":"Mangalore Food Festival","category":"Festival","city":"Mangalore","state":"Karnataka","text":"Local food festival showcasing coastal Karnataka cuisine.","tags":["festival","food"]},
+{"id":"tourism_144","name":"Yakshagana Night Show","category":"Culture","city":"Udupi","state":"Karnataka","text":"Traditional Yakshagana dance drama performed overnight in villages.","tags":["culture","dance"]},
+{"id":"tourism_145","name":"Kambala Race Arena","category":"Culture","city":"Udupi","state":"Karnataka","text":"Traditional buffalo racing arenas used during Kambala festival.","tags":["culture","festival"]},
+
+{"id":"tourism_146","name":"Kudremukh Viewpoint","category":"Viewpoint","city":"Kudremukh","state":"Karnataka","text":"Hilltop viewpoint offering panoramic views of Western Ghats.","tags":["viewpoint","mountain"]},
+{"id":"tourism_147","name":"Belur Road Forest Drive","category":"Nature","city":"Western Ghats","state":"Karnataka","text":"Scenic drive through dense forests near Kudremukh.","tags":["nature","drive"]},
+{"id":"tourism_148","name":"Mangalore Marina Walk","category":"Attraction","city":"Mangalore","state":"Karnataka","text":"Coastal promenade area popular for evening walks.","tags":["walk","tourism"]},
+{"id":"tourism_149","name":"Udupi Boat Jetty","category":"Attraction","city":"Malpe","state":"Karnataka","text":"Jetty area where fishing boats dock and ferry boats depart.","tags":["jetty","tourism"]},
+{"id":"tourism_150","name":"Udupi Heritage Walk","category":"Activity","city":"Udupi","state":"Karnataka","text":"Guided walking tours through temple streets and historic areas.","tags":["tour","heritage"]},
+
+{"id":"tourism_151","name":"Manipal Cycling Trail","category":"Activity","city":"Manipal","state":"Karnataka","text":"Cycling routes around Manipal campus and nearby countryside.","tags":["cycling","activity"]},
+{"id":"tourism_152","name":"Udupi Kayaking","category":"Activity","city":"Udupi","state":"Karnataka","text":"Kayaking tours through coastal backwaters.","tags":["kayak","water"]},
+{"id":"tourism_153","name":"Mangalore Harbor Cruise","category":"Activity","city":"Mangalore","state":"Karnataka","text":"Boat cruise around harbor and coastline.","tags":["boat","tour"]},
+{"id":"tourism_154","name":"Kapu Night Photography Spot","category":"Viewpoint","city":"Kapu","state":"Karnataka","text":"Popular location for night sky and lighthouse photography.","tags":["photography","viewpoint"]},
+{"id":"tourism_155","name":"Panambur Kite Festival","category":"Festival","city":"Mangalore","state":"Karnataka","text":"International kite festival held annually at Panambur Beach.","tags":["festival","beach"]},
+
+{"id":"tourism_156","name":"Kudremukh Wildlife Safari","category":"Activity","city":"Kudremukh","state":"Karnataka","text":"Wildlife safari tours in Kudremukh National Park.","tags":["wildlife","safari"]},
+{"id":"tourism_157","name":"Western Ghats Bird Watching","category":"Nature","city":"Agumbe","state":"Karnataka","text":"Bird watching tours in Western Ghats biodiversity hotspot.","tags":["birdwatching","nature"]},
+{"id":"tourism_158","name":"Mangalore Cultural Center","category":"Culture","city":"Mangalore","state":"Karnataka","text":"Cultural venue hosting dance, music and theatre performances.","tags":["culture","events"]},
+{"id":"tourism_159","name":"Udupi Traditional Cooking Class","category":"Activity","city":"Udupi","state":"Karnataka","text":"Cooking classes teaching authentic Udupi vegetarian cuisine.","tags":["cooking","food"]},
+{"id":"tourism_160","name":"Malpe Beach Cycling","category":"Activity","city":"Malpe","state":"Karnataka","text":"Cycling along beach roads and coastal paths.","tags":["cycling","beach"]},
+
+{"id":"tourism_161","name":"Kodi Backwater Sunset","category":"Viewpoint","city":"Kodi","state":"Karnataka","text":"Sunset viewpoint overlooking calm backwaters.","tags":["sunset","viewpoint"]},
+{"id":"tourism_162","name":"Mulki River Kayaking","category":"Activity","city":"Mulki","state":"Karnataka","text":"Kayaking trips through Mulki river mangroves.","tags":["kayak","nature"]},
+{"id":"tourism_163","name":"Udupi Night Market","category":"Market","city":"Udupi","state":"Karnataka","text":"Night market with street food and souvenirs.","tags":["market","food"]},
+{"id":"tourism_164","name":"Mangalore Lighthouse Hill","category":"Viewpoint","city":"Mangalore","state":"Karnataka","text":"Hilltop viewpoint overlooking harbor.","tags":["viewpoint","hill"]},
+{"id":"tourism_165","name":"Kadri Cave Temple","category":"Temple","city":"Mangalore","state":"Karnataka","text":"Ancient cave shrine near Kadri temple complex.","tags":["temple","heritage"]},
+
+{"id":"tourism_166","name":"Udupi Cultural Museum","category":"Museum","city":"Udupi","state":"Karnataka","text":"Museum displaying regional history and art.","tags":["museum","culture"]},
+{"id":"tourism_167","name":"Manipal Student Plaza","category":"Attraction","city":"Manipal","state":"Karnataka","text":"Public plaza area with cafes and events.","tags":["plaza","tourism"]},
+{"id":"tourism_168","name":"Delta Mangrove Walk","category":"Nature","city":"Kodi","state":"Karnataka","text":"Mangrove boardwalk exploring coastal ecosystems.","tags":["mangrove","nature"]},
+{"id":"tourism_169","name":"Malpe Seafood Street","category":"Food","city":"Malpe","state":"Karnataka","text":"Street known for fresh seafood stalls.","tags":["food","seafood"]},
+{"id":"tourism_170","name":"Udupi Temple Prasadam Hall","category":"Attraction","city":"Udupi","state":"Karnataka","text":"Dining hall serving temple prasadam meals.","tags":["temple","food"]},
+
+{"id":"tourism_171","name":"Surathkal Cliff Walk","category":"Nature","city":"Surathkal","state":"Karnataka","text":"Cliffside walking path overlooking the Arabian Sea.","tags":["walk","view"]},
+{"id":"tourism_172","name":"Mulki Mangrove Forest","category":"Nature","city":"Mulki","state":"Karnataka","text":"Mangrove forests along Mulki river estuary.","tags":["mangrove","nature"]},
+{"id":"tourism_173","name":"Netravati River Boating","category":"Activity","city":"Mangalore","state":"Karnataka","text":"Boat rides along Netravati river offering scenic views.","tags":["boating","river"]},
+{"id":"tourism_174","name":"Karkala Hill Trek","category":"Trek","city":"Karkala","state":"Karnataka","text":"Short trekking route to hilltop temple.","tags":["trek","adventure"]},
+{"id":"tourism_175","name":"Manipal Botanical Garden","category":"Nature","city":"Manipal","state":"Karnataka","text":"Garden with plant species and walking trails.","tags":["garden","nature"]},
+
+{"id":"tourism_176","name":"Pilikula Heritage Village","category":"Heritage","city":"Mangalore","state":"Karnataka","text":"Traditional village museum showing old Karnataka houses.","tags":["heritage","museum"]},
+{"id":"tourism_177","name":"Kudremukh Grasslands","category":"Nature","city":"Kudremukh","state":"Karnataka","text":"Rolling grasslands inside national park famous for scenic landscapes.","tags":["nature","mountain"]},
+{"id":"tourism_178","name":"Agumbe Mist Valley","category":"Nature","city":"Agumbe","state":"Karnataka","text":"Valley viewpoint often covered with mist during monsoon.","tags":["valley","nature"]},
+{"id":"tourism_179","name":"Udupi Coastal Drive","category":"Scenic Route","city":"Udupi","state":"Karnataka","text":"Coastal road drive offering views of sea and villages.","tags":["drive","scenic"]},
+{"id":"tourism_180","name":"Malpe Jetty Fishing Tour","category":"Activity","city":"Malpe","state":"Karnataka","text":"Tour of fishing harbor operations.","tags":["tour","fishing"]},
+
+{"id":"tourism_181","name":"Mangalore City Walk","category":"Tour","city":"Mangalore","state":"Karnataka","text":"Guided walking tours exploring markets and heritage areas.","tags":["tour","heritage"]},
+{"id":"tourism_182","name":"Udupi Cycling Tour","category":"Activity","city":"Udupi","state":"Karnataka","text":"Cycling tour through temple streets and beaches.","tags":["cycling","tour"]},
+{"id":"tourism_183","name":"Manipal Sunrise Hill","category":"Viewpoint","city":"Manipal","state":"Karnataka","text":"Hill viewpoint popular for sunrise photography.","tags":["sunrise","viewpoint"]},
+{"id":"tourism_184","name":"Kapu Cliff View","category":"Viewpoint","city":"Kapu","state":"Karnataka","text":"Cliff viewpoint overlooking lighthouse and beach.","tags":["viewpoint","cliff"]},
+{"id":"tourism_185","name":"Udupi Temple Chariot Storage","category":"Heritage","city":"Udupi","state":"Karnataka","text":"Area where temple chariots are stored between festivals.","tags":["heritage","temple"]},
+
+{"id":"tourism_186","name":"Malpe Marina Area","category":"Attraction","city":"Malpe","state":"Karnataka","text":"Boat marina with fishing vessels and harbor activity.","tags":["marina","tourism"]},
+{"id":"tourism_187","name":"Kollur Forest Trek","category":"Trek","city":"Kollur","state":"Karnataka","text":"Forest trekking trails near Mookambika temple.","tags":["trek","nature"]},
+{"id":"tourism_188","name":"Western Ghats Scenic Route","category":"Scenic Route","city":"Agumbe","state":"Karnataka","text":"Mountain road drive through forests and valleys.","tags":["drive","mountain"]},
+{"id":"tourism_189","name":"Kodi Fishing Village","category":"Culture","city":"Kodi","state":"Karnataka","text":"Traditional fishing village lifestyle tourism.","tags":["culture","village"]},
+{"id":"tourism_190","name":"Mulki River Sunset","category":"Viewpoint","city":"Mulki","state":"Karnataka","text":"Sunset views over Mulki river estuary.","tags":["sunset","river"]},
+
+{"id":"tourism_191","name":"Udupi Coastal Boat Ride","category":"Activity","city":"Udupi","state":"Karnataka","text":"Boat rides exploring coastal backwaters.","tags":["boat","tour"]},
+{"id":"tourism_192","name":"Mangalore Harbor Sunset","category":"Viewpoint","city":"Mangalore","state":"Karnataka","text":"Sunset viewing point overlooking harbor.","tags":["sunset","viewpoint"]},
+{"id":"tourism_193","name":"Pilikula Lake Kayaking","category":"Activity","city":"Mangalore","state":"Karnataka","text":"Kayaking activities in Pilikula lake.","tags":["kayak","activity"]},
+{"id":"tourism_194","name":"Udupi Cultural Dance Hall","category":"Culture","city":"Udupi","state":"Karnataka","text":"Venue for Yakshagana and classical dance shows.","tags":["culture","dance"]},
+{"id":"tourism_195","name":"Manipal Sunset Hill","category":"Viewpoint","city":"Manipal","state":"Karnataka","text":"Hill viewpoint popular among students for sunset views.","tags":["sunset","viewpoint"]},
+
+{"id":"tourism_196","name":"Malpe Dolphin Boat Tour","category":"Activity","city":"Malpe","state":"Karnataka","text":"Boat tour offering chances to see dolphins in Arabian Sea.","tags":["dolphin","tour"]},
+{"id":"tourism_197","name":"Udupi Pilgrimage Route","category":"Tour","city":"Udupi","state":"Karnataka","text":"Pilgrimage route connecting major temples in the district.","tags":["tour","pilgrimage"]},
+{"id":"tourism_198","name":"Agumbe Rainforest Trek","category":"Trek","city":"Agumbe","state":"Karnataka","text":"Trekking trails through dense rainforest ecosystem.","tags":["trek","rainforest"]},
+{"id":"tourism_199","name":"Karkala Jain Heritage Walk","category":"Tour","city":"Karkala","state":"Karnataka","text":"Walking tour exploring Jain monuments and temples.","tags":["heritage","tour"]},
+{"id":"tourism_200","name":"Udupi Coastal Heritage Trail","category":"Tour","city":"Udupi","state":"Karnataka","text":"Trail connecting historical temples, markets and coastal villages.","tags":["heritage","tour"]}
+]

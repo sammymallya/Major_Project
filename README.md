@@ -67,89 +67,129 @@ Data flow: Query → Structurer → Retrieve (Vector/KG) → Rerank → Prompt �
    - Obtain keys from respective service dashboards.
    - Ensure Neo4j has tourism data loaded (places with types like "Beach").
 
-## Running the System
+## Command Runbook
 
-### Start the FastAPI Server
+Run all commands from project root:
 
-Run the server with auto-reload for development:
 ```bash
-uvicorn backend.api.main:app --reload
+cd /Users/sammy/Desktop/Coding/Major_Project/Major_Project
 ```
 
-- **Server URL**: `http://127.0.0.1:8000`
-- **API Documentation**: Visit `http://127.0.0.1:8000/docs` for interactive Swagger UI.
-- **Health Check**: `GET http://127.0.0.1:8000/health` returns `{"status": "ok"}`.
+Use the root venv interpreter in commands below:
 
-### Test the API
+```bash
+./venv/bin/python
+```
 
-Use curl to send a POST request:
+### 1) Run API and Whole Pipeline
+
+Start FastAPI:
+
+```bash
+./venv/bin/python -m uvicorn backend.api.main:app --reload
+```
+
+Health check:
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+Run complete pipeline via API (`test_mode` can be `none`, `vectordb`, `kg`, `hybrid`):
+
 ```bash
 curl -X POST "http://127.0.0.1:8000/query" \
   -H "Content-Type: application/json" \
-  -d '{"query": "Beaches in Mangalore", "test_mode": "kg"}'
+  -d '{"query":"What are some beaches in Mangalore?","test_mode":"hybrid"}'
 ```
 
-**Expected Response** (example for `kg` mode):
-```json
-{
-  "answer": "[Placeholder answer for prompt length=150]",
-  "test_mode": "kg",
-  "context_used": {
-    "kg_triples_count": 1,
-    "kg_snippet": "Someshwar Beach --LOCATED_IN--> Mangalore"
-  }
-}
+### 2) Node-Level Test Commands
+
+Query Structurer:
+
+```bash
+./venv/bin/python -m backend.scripts.test_query_structurer --query "beaches in mangalore" --output-kind both
 ```
 
-- `test_mode` options: `"vectordb"` (vector only), `"kg"` (KG only), `"hybrid"` (both), `"none"` (no retrieval).
-- On failure (e.g., no data), `answer` will be an error message, and `context_used` may be null or partial.
+Vector DB (component script):
 
-## Testing Individual Components
+```bash
+./venv/bin/python -m backend.scripts.test_vectordb --query "beaches near Mangalore" --top-k 5
+```
 
-All scripts run from the project root. They load `backend/.env` and test specific components. Use these to debug or verify setup.
+Vector DB (diagnostic node contact + retrieval check):
 
-1. **Test Knowledge Graph (Neo4j)**:
-   ```bash
-   python -m backend.scripts.test_kg --question "Beaches in Mangalore"
-   ```
-   - Checks Neo4j connection.
-   - Extracts entities, builds Cypher, runs query, formats answer.
-   - Output: Human-readable answer or error.
+```bash
+./venv/bin/python scripts/test_vectordb_node.py --query "beaches" --top-k 5
+```
 
-2. **Test Vector Database (Pinecone)**:
-   ```bash
-   python -m backend.scripts.test_vectordb --query "beaches near Mangalore" --top-k 5
-   ```
-   - Embeds query, fetches top results from Pinecone.
-   - Output: List of results with IDs, scores, text.
+KG node:
 
-3. **Test Query Structurer (Gemini)**:
-   ```bash
-   python -m backend.scripts.test_query_structurer --query "beaches in mangalore" --output-kind kg_only
-   ```
-   - Generates Cypher query.
-   - Output: StructuredQuery with `cypher_query`.
+```bash
+./venv/bin/python -m backend.scripts.test_kg --question "Beaches in Mangalore"
+```
 
-   For both semantic and Cypher:
-   ```bash
-   python -m backend.scripts.test_query_structurer --query "beaches in mangalore" --output-kind both
-   ```
-   - Output: Both `semantic_search_query` and `cypher_query`.
+Vector reranker:
 
-4. **Test KG Reranker**:
-   ```bash
-   python -m backend.scripts.test_kg_reranker --question "Beaches in Mangalore"
-   ```
-   - Fetches KG triples, reranks top 1.
-   - Output: Reranked triple details.
+```bash
+./venv/bin/python -m backend.scripts.test_reranker
+```
 
-5. **Test Vector Reranker**:
-   ```bash
-   # Similar to KG reranker, but for vector results
-   python -m backend.scripts.test_reranker  # (Assuming script exists; adjust if needed)
-   ```
+KG reranker:
 
-Run with `--verbose` for debug logs if issues arise.
+```bash
+./venv/bin/python -m backend.scripts.test_kg_reranker --question "Beaches in Mangalore"
+```
+
+Prompt generator:
+
+```bash
+./venv/bin/python -m backend.scripts.test_prompt_generator
+```
+
+Test LLM:
+
+```bash
+./venv/bin/python -m backend.scripts.test_test_llm
+```
+
+### 3) Vector DB Dataset Upload
+
+Dry run:
+
+```bash
+./venv/bin/python vectordb_uploader/main.py --file vectordb_uploader/dataset/vectordb_dataset.json --dry-run
+```
+
+Upload dataset:
+
+```bash
+./venv/bin/python vectordb_uploader/main.py --file vectordb_uploader/dataset/vectordb_dataset.json
+```
+
+Notes:
+- Uploader uses only `text` from each record.
+- IDs are auto-generated sequentially (default `tourism_001...`).
+- Batch size is capped to Pinecone integrated-embedding max (96).
+
+### 4) Run Evaluation Engine on test_data.json
+
+Default run (single execution per query per mode, no calibration):
+
+```bash
+./venv/bin/python run_evaluation.py --test-data test_data.json --output evaluation_results.json --csv-prefix evaluation_results
+```
+
+Optional calibration-enabled run:
+
+```bash
+./venv/bin/python run_evaluation.py --test-data test_data.json --output evaluation_results.json --csv-prefix evaluation_results --enable-calibration
+```
+
+Generated files:
+- `evaluation_results.json`
+- `evaluation_results_detail.csv`
+- `evaluation_results_summary.csv`
 
 ## Usage Examples
 
@@ -179,5 +219,4 @@ For further help, check component logs or raise issues with output examples.
 - Update `.env` template for new keys.
 - Ensure Cypher queries return triples for KG compatibility.
 
-Enjoy exploring Karnataka tourism! 🏖️</content>
-<parameter name="filePath">/Users/sammy/Desktop/Coding/Major_Project/Major_Project/README.md
+Enjoy exploring Karnataka tourism!

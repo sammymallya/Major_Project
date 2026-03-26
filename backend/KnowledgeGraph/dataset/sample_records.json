@@ -1,0 +1,29 @@
+[
+  {
+    "id": "tourism_196",
+    "name": "Malpe Dolphin Boat Tour",
+    "category": "Activity",
+    "city": "Malpe",
+    "state": "Karnataka",
+    "text": "Boat tour offering chances to see dolphins in Arabian Sea.",
+    "tags": ["dolphin", "tour"]
+  },
+  {
+    "id": "tourism_197",
+    "name": "Mangalore Beach",
+    "category": "Beach",
+    "city": "Mangalore",
+    "state": "Karnataka",
+    "text": "Beautiful sandy beach in Mangalore perfect for relaxation.",
+    "tags": ["beach", "relaxation", "scenic"]
+  },
+  {
+    "id": "tourism_198",
+    "name": "Udupi Temple",
+    "category": "Religious Site",
+    "city": "Udupi",
+    "state": "Karnataka",
+    "text": "Ancient Hindu temple dedicated to Lord Krishna.",
+    "tags": ["temple", "religious"]
+  }
+]

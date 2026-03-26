@@ -65,15 +65,36 @@ def main(argv: list[str] | None = None) -> int:
         kg_triples = []
         for result_dict in raw_triples:
             # Try to construct triples from the query results
-            # Since the query returns {name, description, best_time, entry_fee}
+            # Since the query returns {name, category, city, state, tags}
             # we'll create synthetic triples for demonstration
             name = result_dict.get('name', 'unknown')
-            desc = result_dict.get('description', '')
+            category = result_dict.get('category', '')
+            city = result_dict.get('city', '')
+            tags = result_dict.get('tags', [])
+            
+            # Create primary triple with category info
             kg_triples.append(KgTriple(
                 subject=name,
-                predicate="has_description",
-                object=desc[:50] if desc else "no description"
+                predicate="has_category",
+                object=category if category else "uncategorized"
             ))
+            
+            # Add location triple if city exists
+            if city:
+                kg_triples.append(KgTriple(
+                    subject=name,
+                    predicate="located_in",
+                    object=city
+                ))
+            
+            # Add tags as triples if they exist
+            if tags and isinstance(tags, list):
+                for tag in tags[:3]:  # Limit to top 3 tags
+                    kg_triples.append(KgTriple(
+                        subject=name,
+                        predicate="has_tag",
+                        object=tag
+                    ))
 
         logger.info("Created %d KgTriple objects for reranking", len(kg_triples))
 
