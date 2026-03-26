@@ -1,3 +1,7 @@
 .cursor
 venv
 .env
+evaluation_results_detail.csv
+evaluation_results_summary.csv
+evaluation_results.json
+evaluation_run.log

@@ -1,10 +1,42 @@
 [
   {
-    "query": "What are some beaches in Mangalore?",
-    "answer": "Mangalore has several beaches including Panambur Beach, Tannirbhavi Beach, and Someshwara Beach."
+    "query": "What are some popular beaches in Udupi?",
+    "answer": "Some popular beaches in Udupi include Malpe Beach, Kapu Beach, Padubidri Blue Flag Beach, and Kodi Bengre Beach."
   },
   {
-    "query": "Tell me about temples in Udupi.",
-    "answer": "Udupi is famous for the Udupi Sri Krishna Temple, known for its Krishna idol and traditional cuisine."
+    "query": "Which beaches in Mangalore are known for water sports?",
+    "answer": "Panambur Beach in Mangalore is well known for water sports such as jet skiing, parasailing and beach activities."
+  },
+  {
+    "query": "Tell me about famous temples in Mangalore.",
+    "answer": "Mangalore is home to famous temples like Kadri Manjunath Temple, Kudroli Gokarnath Temple, and Mangaladevi Temple."
+  },
+  {
+    "query": "What is special about Maravanthe Beach?",
+    "answer": "Maravanthe Beach is unique because a highway runs between the Arabian Sea and the Souparnika river, creating a rare scenic landscape."
+  },
+  {
+    "query": "Which places in Udupi are good for cultural or religious visits?",
+    "answer": "Udupi Sri Krishna Temple and Anantheshwara Temple are important cultural and religious sites in Udupi."
+  },
+  {
+    "query": "What are some nature attractions near the Western Ghats in this dataset?",
+    "answer": "Kudlu Falls and Kudremukh National Park are popular nature attractions in the Western Ghats known for trekking and scenic beauty."
+  },
+  {
+    "query": "Which islands or unique geological spots are mentioned near Udupi?",
+    "answer": "St Mary's Island is a unique geological destination near Udupi known for its hexagonal basalt rock formations."
+  },
+  {
+    "query": "What are some shopping malls in Mangalore?",
+    "answer": "Popular shopping malls in Mangalore include Forum Fiza Mall, City Centre Mall, and Bharath Mall."
+  },
+  {
+    "query": "Which restaurants are known for seafood in Mangalore?",
+    "answer": "Machali Restaurant, Gajalee Seafood Restaurant, and Shetty Lunch Home are well known for seafood in Mangalore."
+  },
+  {
+    "query": "What are some activities tourists can do at Malpe Beach?",
+    "answer": "At Malpe Beach, tourists can enjoy water sports, take boat rides to St Mary's Island, go dolphin watching, and experience sea walks."
   }
 ]
