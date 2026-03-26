@@ -191,6 +191,27 @@ Generated files:
 - `evaluation_results_detail.csv`
 - `evaluation_results_summary.csv`
 
+### 5) Run Streamlit Frontend UI
+
+Start the interactive frontend:
+
+```bash
+streamlit run frontend/streamlit_app.py
+```
+
+This opens a browser with a professional dark-themed ChatGPT-like interface where you can:
+- Type natural language queries
+- Select retrieval mode: `none`, `vectordb`, `kg`, `hybrid`
+- View streaming responses from the Test LLM
+- Browse session chat history (cleared on server restart)
+
+Frontend features:
+- ✨ Dark theme with modern UI
+- 💬 Chat-like message display
+- 🎯 Mode selector dropdown
+- 📱 Fully responsive design
+- See [frontend/README.md](frontend/README.md) for more details
+
 ## Usage Examples
 
 - **Vector-Only Search**: `{"query": "best restaurants in Udupi", "test_mode": "vectordb"}` → Retrieves similar documents.
