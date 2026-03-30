@@ -47,9 +47,10 @@ def build_prompt(query: str, vector_snippet: str | None, kg_triples: list[KgTrip
     """
 
     instruction = (
-        "Answer the query using only the supplied context. "
+        "Answer the query using the supplied context below. "
+        "Provide a detailed, natural-sounding response with specific information from the context. "
         "If context is insufficient, explicitly say that the answer is not available in the provided context. "
-        "Keep the answer factual and concise."
+        "Be informative and include relevant details to make the answer comprehensive and helpful."
     )
 
     context_sections: list[str] = []

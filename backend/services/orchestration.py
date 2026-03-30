@@ -29,8 +29,8 @@ TestMode = Literal["vectordb", "kg", "hybrid", "none"]
 # Retrieval limits used by the pipeline.
 _RETRIEVAL_LIMITS = {
     "vector_top_k": 10,
-    "rerank_top_n": 1,
-    "kg_rerank_top_n": 1,
+    "rerank_top_n": 3,  # Increased from 1 to use top 3 results instead of just 1
+    "kg_rerank_top_n": 3,  # Increased from 1 to use top 3 triples instead of just 1
 }
 
 
@@ -104,9 +104,10 @@ def run_pipeline(query: str, test_mode: TestMode) -> QueryResponse:
         # Vector path
         if structured.semantic_search_query:
             search_query = structured.semantic_search_query
-            logger.debug("Vector path: fetching top_k=%d then reranking top_n=%d", vector_top_k, rerank_top_n)
+            logger.info("Vector path: semantic_query='%s', fetching top_k=%d then reranking top_n=%d", search_query, vector_top_k, rerank_top_n)
             candidates, _ = fetch_top_vectordb(n=vector_top_k, query=search_query, include_debug=False)
             if candidates:
+                logger.debug("Vector DB returned %d candidates (top 3 scores: %s)", len(candidates), [f"{c.score:.3f}" for c in candidates[:3]])
                 reranked, _ = rerank_top_cross_encoder(
                     query=search_query,
                     candidates=candidates,
@@ -114,19 +115,22 @@ def run_pipeline(query: str, test_mode: TestMode) -> QueryResponse:
                     include_debug=False,
                 )
                 if reranked:
-                    vector_snippet = reranked[0].text
-                    logger.info("Vector path produced snippet (len=%d)", len(vector_snippet or ""))
+                    vector_snippet = "\n".join([r.text for r in reranked])
+                    logger.info("Vector path produced %d snippet(s) (total len=%d)", len(reranked), len(vector_snippet or ""))
+                else:
+                    logger.warning("Vector reranking returned no results despite %d candidates", len(candidates))
             else:
-                logger.debug("Vector path returned no candidates")
+                logger.warning("Vector DB returned 0 candidates for query='%s'", search_query)
         else:
-            logger.debug("No semantic_search_query; skipping vector path")
+            logger.warning("No semantic_search_query from Query Structurer; skipping vector path")
 
         # KG path: fetch and rerank triples
         if structured.cypher_query:
-            logger.info("Generated Cypher query: %s", structured.cypher_query)
+            logger.info("KG path: Cypher='%s'", structured.cypher_query[:120])
             kg_triples = fetch_kg(structured.cypher_query)
-            logger.debug("KG path: fetched %d triple(s), reranking top_n=%d", len(kg_triples), kg_rerank_top_n)
+            logger.info("KG path: fetched %d triple(s), reranking to top_n=%d", len(kg_triples), kg_rerank_top_n)
             if kg_triples:
+                logger.debug("Sample triples: %s", [(t.subject, t.predicate, t.object) for t in kg_triples[:2]])
                 # Use the semantic search query if available, else use the original query
                 rerank_query = structured.semantic_search_query or query
                 reranked, _ = rerank_kg_triples(
@@ -143,11 +147,12 @@ def run_pipeline(query: str, test_mode: TestMode) -> QueryResponse:
                     ]
                     logger.info("KG rerank produced %d triple(s)", len(kg_triples))
                 else:
+                    logger.warning("KG reranking returned no results despite %d triples", len(kg_triples))
                     kg_triples = []
             else:
-                logger.debug("KG path returned no triples")
+                logger.warning("KG path returned 0 triples from Neo4j for Cypher query")
         else:
-            logger.debug("No cypher_query; skipping KG path")
+            logger.warning("No cypher_query from Query Structurer; skipping KG path")
 
     # Set kg_snippet from top triple
     kg_snippet: str | None = None

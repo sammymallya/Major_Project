@@ -25,14 +25,24 @@ logger = logging.getLogger(__name__)
 OutputKind = Literal["vector_only", "kg_only", "both"]
 
 _SYSTEM = """You are a query structurer for a Karnataka tourism (Mangalore, Udupi) system.
-Given a user question, you output structured queries in JSON only, no other text.
+Given a user question, output VALID JSON and NOTHING ELSE.
+
+Requirements:
+- Output ONLY a single valid JSON object, no markdown, no explanation, no extra text.
+- Use double quotes for all strings (mandatory for JSON).
+- Escape internal quotes with backslash.
+- Do NOT output Python expressions or pseudo-code.
 
 The knowledge graph has nodes: Place (properties: name, category, city, state, tags), City (name, state), State (name).
 Relations: LOCATED_IN (Place->City).
 
-- For semantic search: output a short, clean "semantic_search_query" string suitable for vector similarity search (key phrases, no full sentences).
-- For the knowledge graph: output a "cypher_query" string that is valid Neo4j Cypher. Use MATCH and return triples as subject, predicate, object. Example: MATCH (p:Place)-[r:LOCATED_IN]->(c:City) WHERE p.city = 'Mangalore' AND p.category = 'Beach' RETURN p.name AS subject, type(r) AS predicate, c.name AS object LIMIT 10.
-Always respond with exactly one JSON object. No markdown, no explanation."""
+Fields:
+- "semantic_search_query": A short, clean string for vector similarity search (key phrases, no full sentences).
+- "cypher_query": A valid Neo4j Cypher query returning triples as subject, predicate, object.
+  Example: MATCH (p:Place) WHERE p.city = 'Mangalore' AND p.category = 'Beach' RETURN p.name AS subject, 'has_category' AS predicate, p.category AS object LIMIT 10
+
+Example output (valid JSON):
+{"semantic_search_query": "beaches in Mangalore", "cypher_query": "MATCH (p:Place) WHERE p.category = 'Beach' RETURN p.name AS subject, 'category' AS predicate, p.category AS object"}"""
 
 _PROMPT_TEMPLATES = {
     "vector_only": "User question: {query}\n\nOutput JSON with key: semantic_search_query",
@@ -46,6 +56,51 @@ cypher_query: A valid Neo4j Cypher query returning triples (e.g., MATCH (p:Place
 }
 
 
+def _find_balanced_json(text: str, start_pos: int = 0) -> str | None:
+    """
+    Find and extract a balanced JSON object from text starting at start_pos.
+    Handles nested braces by tracking opening/closing brackets.
+    """
+    i = start_pos
+    while i < len(text) and text[i] != '{':
+        i += 1
+    
+    if i >= len(text):
+        return None
+    
+    depth = 0
+    in_string = False
+    escape = False
+    start = i
+    
+    while i < len(text):
+        char = text[i]
+        
+        if escape:
+            escape = False
+            i += 1
+            continue
+        
+        if char == '\\':
+            escape = True
+            i += 1
+            continue
+        
+        if char == '"' and not escape:
+            in_string = not in_string
+        elif not in_string:
+            if char == '{':
+                depth += 1
+            elif char == '}':
+                depth -= 1
+                if depth == 0:
+                    return text[start:i+1]
+        
+        i += 1
+    
+    return None
+
+
 def _parse_llm_response(text: str, output_kind: OutputKind) -> StructuredQuery:
     """
     Parse LLM response into StructuredQuery. On failure, return safe fallbacks.
@@ -53,25 +108,32 @@ def _parse_llm_response(text: str, output_kind: OutputKind) -> StructuredQuery:
     semantic: str | None = None
     cypher: str | None = None
 
-    # Try to extract JSON from the response (in case of markdown or extra text)
-    json_match = re.search(r"\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}", text, re.DOTALL)
-    if json_match:
-        json_text = json_match.group()
+    # Try to extract balanced JSON from the response
+    json_text = _find_balanced_json(text)
+    
+    if json_text:
         data = None
         # Primary: try strict JSON
         try:
             data = json.loads(json_text)
         except (json.JSONDecodeError, TypeError) as e_json:
-            # Secondary: try Python literal_eval for single-quoted or non-strict dicts
+            # Secondary: try cleaning common issues (single quotes, escaped quotes)
             try:
-                data = ast.literal_eval(json_text)
-            except Exception as e_ast:
-                # Tertiary: naive single-quote -> double-quote attempt (best-effort)
+                # Replace single quotes with double quotes (careful: only for dict keys/values)
+                cleaned = json_text.replace("'", '"')
+                data = json.loads(cleaned)
+            except Exception as e1:
+                # Tertiary: unescape and try
                 try:
-                    cleaned = json_text.replace("\'", '"')
-                    data = json.loads(cleaned)
-                except Exception:
-                    logger.warning("Query structurer JSON parse failed: %s; literal_eval failed: %s", e_json, e_ast)
+                    # Try to handle backslash-escaped content
+                    if '\\' in json_text:
+                        # Don't decode unicode_escape as it can cause issues
+                        # Instead, try to fix common escaping issues
+                        cleaned = json_text.replace('\\"', '"').replace("\\'", "'")
+                        data = json.loads(cleaned)
+                except Exception as e2:
+                    logger.debug("Query structurer JSON parse attempts failed: strict=%s, cleaned=%s", 
+                                str(e_json)[:100], str(e1)[:100])
 
         if isinstance(data, dict):
             if output_kind in ("vector_only", "both") and "semantic_search_query" in data:
@@ -80,27 +142,68 @@ def _parse_llm_response(text: str, output_kind: OutputKind) -> StructuredQuery:
             if output_kind in ("kg_only", "both") and "cypher_query" in data:
                 c = data["cypher_query"]
                 cypher = c if isinstance(c, str) and c.strip() else None
-        else:
-            # Log a short snippet for debugging when parsing fails
-            logger.debug("Unable to parse structured JSON from LLM response (snippet=%r)", (text or '')[:400])
 
-            # Fallback heuristics: try to extract values with regex from non-JSON text
-            try:
-                if output_kind in ("vector_only", "both"):
-                    m = re.search(r"semantic_search_query\s*[:=]\s*[\"']([^\"']+)[\"']", text, re.IGNORECASE)
+    # If JSON parsing failed, use regex fallback heuristics
+    if semantic is None or cypher is None:
+        logger.debug("JSON parsing failed or incomplete, trying regex fallbacks")
+        try:
+            if output_kind in ("vector_only", "both") and semantic is None:
+                # Try multiple patterns
+                patterns = [
+                    r"semantic_search_query\s*:\s*[\"']([^\"']*)[\"']",
+                    r"semantic_search_query\s*=\s*[\"']([^\"']*)[\"']",
+                    r"[\"']semantic_search_query[\"']\s*:\s*[\"']([^\"']+)[\"']",
+                ]
+                for pattern in patterns:
+                    m = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
                     if m:
                         semantic = m.group(1).strip()
-                if output_kind in ("kg_only", "both"):
-                    m2 = re.search(r"cypher_query\s*[:=]\s*[\"']([^\"']+)[\"']", text, re.IGNORECASE)
-                    if m2:
-                        cypher = m2.group(1).strip()
-            except Exception:
-                logger.debug("Fallback regex extraction also failed", exc_info=True)
+                        if semantic:
+                            break
+            
+            if output_kind in ("kg_only", "both") and cypher is None:
+                # Try multiple patterns for Cypher (which can be longer)
+                patterns = [
+                    r"cypher_query\s*:\s*[\"']([^\"']+)[\"']",
+                    r"cypher_query\s*=\s*[\"']([^\"']+)[\"']",
+                    r"[\"']cypher_query[\"']\s*:\s*[\"']([^\"']+)[\"']",
+                    r"MATCH\s+\([^)]*\)[^}]*",  # Try to find MATCH...
+                ]
+                for pattern in patterns:
+                    m = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
+                    if m:
+                        cypher = m.group(1).strip() if m.lastindex else m.group(0).strip()
+                        if cypher:
+                            break
+        except Exception:
+            logger.debug("Regex fallback extraction failed", exc_info=True)
 
     return StructuredQuery(
         semantic_search_query=semantic,
         cypher_query=cypher,
     )
+
+
+def _generate_fallback_cypher(query: str) -> str:
+    """
+    Generate a fallback Cypher query when LLM structuring fails.
+    Attempts basic place searches based on common keywords.
+    """
+    q_lower = query.lower()
+    
+    # Check for common patterns
+    if any(word in q_lower for word in ["beach", "beaches"]):
+        return "MATCH (p:Place {category: 'Beach'}) RETURN p.name AS subject, 'category' AS predicate, p.category AS object LIMIT 10"
+    elif any(word in q_lower for word in ["temple", "temples", "church"]):
+        return "MATCH (p:Place) WHERE p.category IN ['Temple', 'Church'] RETURN p.name AS subject, 'category' AS predicate, p.category AS object LIMIT 10"
+    elif any(word in q_lower for word in ["restaurant", "food", "eat"]):
+        return "MATCH (p:Place {category: 'Restaurant'}) RETURN p.name AS subject, 'category' AS predicate, p.category AS object LIMIT 10"
+    elif any(word in q_lower for word in ["mangalore", "udupi"]):
+        city = "Mangalore" if "mangalore" in q_lower else "Udupi"
+        return f"MATCH (p:Place) WHERE p.city = '{city}' RETURN p.name AS subject, 'city' AS predicate, p.city AS object LIMIT 10"
+    else:
+        # Generic fallback: return all places
+        return "MATCH (p:Place) RETURN p.name AS subject, 'type' AS predicate, p.category AS object LIMIT 10"
 
 
 def _extract_from_proto_like(obj: Any) -> str | None:
@@ -230,8 +333,11 @@ def structure_query(query: str, output_kind: OutputKind) -> StructuredQuery:
         logger.info("Raw Gemini content (truncated 2000 chars): %s", content[:2000])
     except Exception:
         logger.exception("Query structurer failed invoking Gemini API")
+        # Log the fallback being used
+        fallback_semantic = query if output_kind in ("vector_only", "both") else None
+        logger.warning("Query Structurer exception - using fallback: semantic=%s, cypher=None", fallback_semantic)
         return StructuredQuery(
-            semantic_search_query=query if output_kind in ("vector_only", "both") else None,
+            semantic_search_query=fallback_semantic,
             cypher_query=None,
         )
 
@@ -240,13 +346,20 @@ def structure_query(query: str, output_kind: OutputKind) -> StructuredQuery:
     # If semantic was requested but parsing left it empty, use original query
     if output_kind in ("vector_only", "both") and result.semantic_search_query is None:
         result = StructuredQuery(semantic_search_query=query, cypher_query=result.cypher_query)
+        logger.info("Used fallback semantic_search_query (original query)")
+    
+    # If Cypher was requested but parsing left it empty, generate a fallback
+    if output_kind in ("kg_only", "both") and result.cypher_query is None:
+        fallback_cypher = _generate_fallback_cypher(query)
+        result = StructuredQuery(semantic_search_query=result.semantic_search_query, cypher_query=fallback_cypher)
+        logger.info("Used fallback Cypher query due to LLM parsing failure")
 
     def _trunc(s: str | None, max_len: int = 60) -> str:
         if not s:
             return str(s)
         return s[:max_len] + "..." if len(s) > max_len else s
 
-    logger.debug("Structured query: semantic=%s cypher=%s", _trunc(result.semantic_search_query), _trunc(result.cypher_query))
+    logger.info("Final Query Structurer result: semantic=%s cypher=%s", _trunc(result.semantic_search_query), _trunc(result.cypher_query))
     return result
 
 
