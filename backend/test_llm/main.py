@@ -99,6 +99,8 @@ def generate_answer(prompt: str) -> str:
             "num_beams": settings.num_beams,
             "repetition_penalty": settings.repetition_penalty,
             "no_repeat_ngram_size": settings.no_repeat_ngram_size,
+            "length_penalty": settings.length_penalty,
+            "min_length": settings.min_length,
             "pad_token_id": _tokenizer.pad_token_id,
         })
     else:

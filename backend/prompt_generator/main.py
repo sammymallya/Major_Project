@@ -47,10 +47,14 @@ def build_prompt(query: str, vector_snippet: str | None, kg_triples: list[KgTrip
     """
 
     instruction = (
-        "Answer the query using the supplied context below. "
-        "Provide a detailed, natural-sounding response with specific information from the context. "
-        "If context is insufficient, explicitly say that the answer is not available in the provided context. "
-        "Be informative and include relevant details to make the answer comprehensive and helpful."
+        "Answer the query using the supplied context below.\n"
+        "Write your answer in 2-4 complete, well-structured sentences that flow naturally.\n"
+        "Start by directly addressing the query with the main information.\n"
+        "Then elaborate with specific details and descriptive context from the provided information.\n"
+        "Construct a coherent narrative response - do not simply repeat the context verbatim.\n"
+        "When integrating knowledge graph facts (e.g., 'X--property--Y'), write them naturally as part of sentences (e.g., 'X has the property Y').\n"
+        "Use descriptive language and ensure the answer is informative and complete.\n"
+        "If context is insufficient, explicitly say the answer is not available in the provided context."
     )
 
     context_sections: list[str] = []
