@@ -15,16 +15,15 @@ class VectorDBSettings(BaseSettings):
 
     Values are loaded from environment variables, with optional support
     for a `.env` file in the project root.
+    
+    NOTE: Query embedding is handled by Pinecone's serverless embedding
+    (llama-text-embed-v2), not by a local embedding model. This ensures
+    consistency with the data embeddings used during upload.
     """
 
     pinecone_api_key: str = Field(..., alias="VECTORDB_PINECONE_API_KEY")
     pinecone_environment: str = Field(..., alias="VECTORDB_PINECONE_ENVIRONMENT")
     pinecone_index_name: str = Field(..., alias="VECTORDB_PINECONE_INDEX_NAME")
-
-    # Embedding model configuration
-    embedding_model_name: str = Field(
-        default="all-roberta-large-v1", alias="VECTORDB_EMBEDDING_MODEL_NAME"
-    )
 
     # Optional namespace support for isolating experiments within an index
     # Default to 'tourism' to target the correct dataset namespace.

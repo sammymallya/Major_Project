@@ -6,8 +6,8 @@ to interact with the vector database without knowing any Pinecone internals.
 
 Key entry point:
     - `fetch_top_vectordb(n, query)`:
-        Embed the input query using a local MiniLM model and return the top
-        `n` most similar results from Pinecone.
+        Send the query to Pinecone's serverless embedding (llama-text-embed-v2)
+        and return the top `n` most similar results.
 """
 
 from __future__ import annotations
@@ -16,7 +16,6 @@ import logging
 from typing import List
 
 from pinecone import Pinecone  # type: ignore[import]
-from sentence_transformers import SentenceTransformer  # type: ignore[import]
 
 from .config import get_vectordb_settings, VectorDBSettings
 from .types import VectorQueryDebugInfo, VectorResult
@@ -26,11 +25,11 @@ logger = logging.getLogger(__name__)
 
 class VectorDBClient:
     """
-    Thin wrapper around Pinecone and the local embedding model.
+    Thin wrapper around Pinecone with serverless embedding support.
 
     This class is responsible for:
       - Initializing the Pinecone client and index.
-      - Loading the `all-MiniLM-L6-v2` (or configured) embedding model.
+      - Delegating query embedding to Pinecone's serverless llama-text-embed-v2 model.
       - Executing similarity queries and mapping raw results to `VectorResult`.
     """
 
@@ -46,12 +45,11 @@ class VectorDBClient:
         # Pinecone v3 client: create a Pinecone instance and then obtain an Index handle.
         self._pc = Pinecone(api_key=self._settings.pinecone_api_key)
         self._index = self._pc.Index(self._settings.pinecone_index_name)
-
+        
         logger.info(
-            "Loading sentence-transformers embedding model '%s'",
-            self._settings.embedding_model_name,
+            "Using Pinecone serverless embedding (llama-text-embed-v2) for index '%s'",
+            self._settings.pinecone_index_name,
         )
-        self._embedder = SentenceTransformer(self._settings.embedding_model_name)
 
     @property
     def settings(self) -> VectorDBSettings:
@@ -60,15 +58,6 @@ class VectorDBClient:
         """
 
         return self._settings
-
-    def _embed_query(self, query: str) -> list[float]:
-        """
-        Compute a dense vector embedding for the given query string.
-        """
-
-        logger.debug("Encoding query for vector search")
-        embedding = self._embedder.encode(query, convert_to_numpy=True)
-        return embedding.tolist()
 
     def fetch_top(
         self,
@@ -79,6 +68,9 @@ class VectorDBClient:
     ) -> tuple[List[VectorResult], VectorQueryDebugInfo | None]:
         """
         Retrieve the top `n` most similar records from Pinecone for the query.
+
+        The query is embedded server-side using Pinecone's llama-text-embed-v2 model,
+        ensuring consistency with the data embeddings.
 
         Args:
             n: Number of top results to return.
@@ -96,10 +88,8 @@ class VectorDBClient:
             logger.warning("Requested non-positive number of results: %s", n)
             return [], None
 
-        vector = self._embed_query(query)
-
         query_kwargs: dict = {
-            "vector": vector,
+            "query_text": query,
             "top_k": n,
             "include_metadata": True,
         }
@@ -107,7 +97,7 @@ class VectorDBClient:
             query_kwargs["namespace"] = self._settings.pinecone_namespace
 
         logger.info(
-            "Querying Pinecone index '%s' for top %d results (namespace=%s)",
+            "Querying Pinecone index '%s' for top %d results (namespace=%s) using serverless embedding",
             self._settings.pinecone_index_name,
             n,
             self._settings.pinecone_namespace,
@@ -139,7 +129,7 @@ class VectorDBClient:
         debug_info: VectorQueryDebugInfo | None = None
         if include_debug:
             debug_info = VectorQueryDebugInfo(
-                model_name=self._settings.embedding_model_name,
+                model_name="llama-text-embed-v2 (Pinecone serverless)",
                 top_scores=top_scores,
                 namespace=self._settings.pinecone_namespace,
             )
