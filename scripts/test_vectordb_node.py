@@ -58,7 +58,7 @@ def main(argv: list[str] | None = None) -> int:
         print("  OK: VectorDBClient initialized.")
         print(f"  Index: {client.settings.pinecone_index_name}")
         print(f"  Namespace: {client.settings.pinecone_namespace}")
-        print(f"  Embedding: Pinecone serverless (llama-text-embed-v2)")
+        print(f"  Embedding: Pinecone inference API (llama-text-embed-v2)")
     except Exception as exc:
         print(f"  FAIL: Unable to initialize vector DB client: {exc}")
         return 1

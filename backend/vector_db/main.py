@@ -29,7 +29,7 @@ class VectorDBClient:
 
     This class is responsible for:
       - Initializing the Pinecone client and index.
-      - Delegating query embedding to Pinecone's serverless llama-text-embed-v2 model.
+      - Using Pinecone's inference API to embed queries with llama-text-embed-v2.
       - Executing similarity queries and mapping raw results to `VectorResult`.
     """
 
@@ -47,7 +47,7 @@ class VectorDBClient:
         self._index = self._pc.Index(self._settings.pinecone_index_name)
         
         logger.info(
-            "Using Pinecone serverless embedding (llama-text-embed-v2) for index '%s'",
+            "Using Pinecone inference API with llama-text-embed-v2 for query embedding on index '%s'",
             self._settings.pinecone_index_name,
         )
 
@@ -59,6 +59,33 @@ class VectorDBClient:
 
         return self._settings
 
+    def _embed_query_with_inference(self, query: str) -> list[float]:
+        """
+        Embed query text using Pinecone's inference API with llama-text-embed-v2.
+        
+        This ensures the query embedding uses the same model as the data embeddings.
+        """
+        logger.debug("Embedding query using Pinecone inference API (llama-text-embed-v2)")
+        try:
+            # Use Pinecone's inference API to embed with the same model used for data
+            embeds = self._pc.inference.embed(
+                model="llama-text-embed-v2",
+                inputs=[query],
+                parameters={"input_type": "query"},
+            )
+            
+            # Extract the embedding vector from the response
+            if embeds and embeds[0]["values"]:
+                embedding_vector = embeds[0]["values"]
+                logger.debug(f"Query embedding generated: {len(embedding_vector)} dimensions")
+                return embedding_vector
+            else:
+                raise ValueError("No embedding returned from Pinecone inference API")
+                
+        except Exception as e:
+            logger.error(f"Failed to embed query with Pinecone inference: {e}")
+            raise
+
     def fetch_top(
         self,
         n: int,
@@ -69,7 +96,7 @@ class VectorDBClient:
         """
         Retrieve the top `n` most similar records from Pinecone for the query.
 
-        The query is embedded server-side using Pinecone's llama-text-embed-v2 model,
+        The query is embedded using Pinecone's inference API with llama-text-embed-v2,
         ensuring consistency with the data embeddings.
 
         Args:
@@ -88,8 +115,11 @@ class VectorDBClient:
             logger.warning("Requested non-positive number of results: %s", n)
             return [], None
 
+        # Embed query using Pinecone's inference API
+        vector = self._embed_query_with_inference(query)
+
         query_kwargs: dict = {
-            "query_text": query,
+            "vector": vector,
             "top_k": n,
             "include_metadata": True,
         }
@@ -97,7 +127,7 @@ class VectorDBClient:
             query_kwargs["namespace"] = self._settings.pinecone_namespace
 
         logger.info(
-            "Querying Pinecone index '%s' for top %d results (namespace=%s) using serverless embedding",
+            "Querying Pinecone index '%s' for top %d results (namespace=%s) using llama-text-embed-v2 inference",
             self._settings.pinecone_index_name,
             n,
             self._settings.pinecone_namespace,
@@ -129,7 +159,7 @@ class VectorDBClient:
         debug_info: VectorQueryDebugInfo | None = None
         if include_debug:
             debug_info = VectorQueryDebugInfo(
-                model_name="llama-text-embed-v2 (Pinecone serverless)",
+                model_name="llama-text-embed-v2 (Pinecone inference)",
                 top_scores=top_scores,
                 namespace=self._settings.pinecone_namespace,
             )
